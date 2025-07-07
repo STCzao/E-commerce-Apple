@@ -1,97 +1,132 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import slide1 from "../../assets/carrousel-1.png";
+import slide2 from "../../assets/carrousel-2.png";
+import slide3 from "../../assets/carrousel-3.png";
+import slide4 from "../../assets/carrousel-4.png";
+import slide5 from "../../assets/carrousel-5.png";
 
 const Carrousel = () => {
-  const slider = document.getElementById("slider");
-  const nextButton = document.getElementById("next");
-  const prevButton = document.getElementById("prev");
-  let currentSlide = 0;
-  const totalSlides = slider.children.length;
+  const sliderRef = useRef(null);
+  const nextButtonRef = useRef(null);
+  const prevButtonRef = useRef(null);
+  const currentSlide = useRef(0);
+  let slideInterval = useRef(null);
 
-  function goToSlide(index) {
-    const slideWidth = slider.children[0].clientWidth;
-    slider.style.transform = `translateX(-${index * slideWidth}px)`;
-  }
+  const goToSlide = (index) => {
+    const slider = sliderRef.current;
+    if (slider && slider.children.length > 0) {
+      const slideWidth = slider.children[0].clientWidth;
+      slider.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+  };
 
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    goToSlide(currentSlide);
-  }
+  const nextSlide = () => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    const totalSlides = slider.children.length;
+    currentSlide.current = (currentSlide.current + 1) % totalSlides;
+    goToSlide(currentSlide.current);
+  };
 
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    goToSlide(currentSlide);
-  }
+  const prevSlide = () => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    const totalSlides = slider.children.length;
+    currentSlide.current =
+      (currentSlide.current - 1 + totalSlides) % totalSlides;
+    goToSlide(currentSlide.current);
+  };
 
-  let slideInterval = setInterval(nextSlide, 3000);
+  const resetAutoSlide = () => {
+    clearInterval(slideInterval.current);
+    slideInterval.current = setInterval(nextSlide, 3000);
+  };
 
-  function resetAutoSlide() {
-    clearInterval(slideInterval);
-    slideInterval = setInterval(nextSlide, 3000);
-  }
+  useEffect(() => {
+    const next = nextButtonRef.current;
+    const prev = prevButtonRef.current;
 
-  nextButton.addEventListener("click", () => {
-    nextSlide();
-    resetAutoSlide();
-  });
+    slideInterval.current = setInterval(nextSlide, 3000);
+    goToSlide(0);
 
-  prevButton.addEventListener("click", () => {
-    prevSlide();
-    resetAutoSlide();
-  });
+    if (next && prev) {
+      next.addEventListener("click", () => {
+        nextSlide();
+        resetAutoSlide();
+      });
+      prev.addEventListener("click", () => {
+        prevSlide();
+        resetAutoSlide();
+      });
+    }
 
-  window.addEventListener("resize", () => goToSlide(currentSlide));
+    window.addEventListener("resize", () => goToSlide(currentSlide.current));
 
-  goToSlide(currentSlide);
+    return () => {
+      clearInterval(slideInterval.current);
+      window.removeEventListener("resize", () =>
+        goToSlide(currentSlide.current)
+      );
+    };
+  }, []);
 
   return (
     <div>
-      <div class="flex items-center">
+      <div className="flex items-center">
         <button
-          id="prev"
-          class="md:p-2 p-1 bg-black/30 md:mr-6 mr-2 rounded-full hover:bg-black/50"
+          ref={prevButtonRef}
+          className="md:p-2 p-1 bg-black/30 md:mr-6 mr-2 rounded-full hover:bg-black/50"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 text-white"
+            className="h-6 w-6 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M15 19l-7-7 7-7"
             />
           </svg>
         </button>
-        <div class="w-full max-w-3xl overflow-hidden relative">
+        <div className="w-full max-w-3xl overflow-hidden relative rounded">
           <div
-            class="flex transition-transform duration-500 ease-in-out"
-            id="slider"
+            className="flex transition-transform duration-500 ease-in-out"
+            ref={sliderRef}
           >
-            
+            <img src={slide1} className="w-full flex-shrink-0" alt="Slide 1" />
+            <img src={slide2} className="w-full flex-shrink-0" alt="Slide 2" />
+            <img src={slide3} className="w-full flex-shrink-0" alt="Slide 3" />
+            <img src={slide4} className="w-full flex-shrink-0" alt="Slide 4" />
+            <img src={slide5} className="w-full flex-shrink-0" alt="Slide 5" />
           </div>
         </div>
-
         <button
-          id="next"
-          class="p-1 md:p-2 bg-black/30 md:ml-6 ml-2 rounded-full hover:bg-black/50"
+          ref={nextButtonRef}
+          className="p-1 md:p-2 bg-black/30 md:ml-6 ml-2 rounded-full hover:bg-black/50"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 text-white"
+            className="h-6 w-6 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="2"
+            strokeWidth="2"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M9 5l7 7-7 7"
             />
           </svg>
+        </button>
+      </div>
+      <div className="flex bg-black text-white items-center gap-2 border hover:border-slate-400/70 rounded-full w-max mx-auto px-4 py-2 mt-40 md:mt-32">
+        <button className="flex items-center gap-1 font-medium">
+          <span>Sumergite en el mundo Apple</span>
         </button>
       </div>
     </div>
