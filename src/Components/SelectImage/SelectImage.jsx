@@ -3,6 +3,7 @@ import selectImage1 from "../../assets/fondo-home.png";
 import selectImage2 from "../../assets/fondo-home-1.png";
 import selectImage3 from "../../assets/fondo-home-2.png";
 import selectImage4 from "../../assets/fondo-home-3.png";
+import selectImage5 from "../../assets/fondo-home-4.png";
 
 const SelectImage = () => {
   useEffect(() => {
@@ -25,10 +26,10 @@ const SelectImage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center mb-20">
+    <div className="flex flex-col items-center mb-40">
       <div className="flex flex-col items-center mb-15">
-        <h6 className="text-5xl font-semibold mb-10">iPhone 16 Pro</h6>
-        <span className="text-xl">Creado para Apple Intelligence</span>
+        <span className="text-5xl font-semibold mb-10">iPhone 16 Pro</span>
+        <span className="text-xl">Creado para Apple Intelligence.</span>
       </div>
       <div className="flex flex-col items-center space-y-4">
         <div
@@ -62,6 +63,14 @@ const SelectImage = () => {
             id="main-image"
             src={selectImage1}
             alt="main"
+            className="w-full rounded-lg"
+          />
+        </div>
+        <div className="flex flex-col items-center w-full max-w-3xl mt-40">
+          <span className="text-2xl font-semibold mb-15">Míralo más de cerca.</span>
+          <img
+            src={selectImage5}
+            alt="secondary-image"
             className="w-full rounded-lg"
           />
         </div>
