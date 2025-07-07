@@ -4,7 +4,7 @@ import Logo from "../../assets/apple-icon1.png";
 const Navbar = () => {
   const navLinks = [
     { name: "Inicio", path: "/" },
-    { name: "Productos", path: "/" },
+    { name: "Catálogo", path: "/" },
     { name: "Contacto", path: "/" },
     { name: "Nosotros", path: "/" },
   ];
@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
+      className={`fixed top-0 left-0 w-full flex items-center justify-between px-10 py-2 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
         isScrolled
           ? "bg-white/50 shadow-md text-black backdrop-blur-lg py-3 md:py-4"
           : "bg-transparent py-4 md:py-6"

@@ -47,7 +47,7 @@ const Lanzamientos = () => {
         onMouseEnter={() => setStopScroll(true)}
         onMouseLeave={() => setStopScroll(false)}
       >
-        <div className="absolute left-0 top-0 h-full w-20 z-10 pointer-events-none bg-gradient-to-r from-[#F5F7FF]/50 to-transparent" />
+        <div className="absolute left-0 top-0 h-full w-20 z-10 pointer-events-none bg-gradient-to-r from-[#ffffff] to-transparent" />
         <div
           className="marquee-inner flex w-fit"
           style={{
@@ -75,7 +75,12 @@ const Lanzamientos = () => {
             ))}
           </div>
         </div>
-        <div className="absolute right-0 top-0 h-full w-20 md:w-40 z-10 pointer-events-none bg-gradient-to-l from-[#F5F7FF]/50 to-transparent" />
+        <div className="absolute right-0 top-0 h-full w-20 md:w-40 z-10 pointer-events-none bg-gradient-to-l from-[#ffffff] to-transparent" />
+      </div>
+      <div className="flex flex-column bg-black text-white items-center border hover:border-slate-400/70 rounded-full w-max mx-auto px-4 py-2 md:mt-10">
+        <button className="flex items-center gap-2 font-medium">
+          <span>Explora todos nuestros productos</span>
+        </button>
       </div>
     </>
   );
