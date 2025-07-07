@@ -34,7 +34,9 @@ const Navbar = () => {
         <img
           src={Logo}
           alt="logo"
-          className={`h-9`}
+          className={`h-9 transition-all duration-300 ${
+            isScrolled ? "invert-0" : "invert"
+          }`}
         />
       </a>
 

@@ -79,7 +79,7 @@ const Lanzamientos = () => {
       </div>
       <div className="flex flex-column bg-black text-white items-center border hover:border-slate-400/70 rounded-full w-max mx-auto px-4 py-2 md:mt-10">
         <button className="flex items-center gap-2 font-medium">
-          <span>Explora todos nuestros productos</span>
+          <span>Explorá nuestro catálogo</span>
         </button>
       </div>
     </>
