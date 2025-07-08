@@ -1,18 +1,18 @@
 import React from "react";
 import Hero from "../Components/Hero/Hero";
 import Lanzamientos from "../Components/Lanzamientos/Lanzamientos";
-import SelectImage from "../Components/SelectImage/SelectImage";
+import SelectImagen from "../Components/SelectImagen/SelectImagen";
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div>
       <Hero />
       <div className="flex justify-center items-center mt-40 mb-40">
         <Lanzamientos />
       </div>
-      <SelectImage />
+      <SelectImagen />
     </div>
   );
 };
 
-export default Home;
+export default HomePage;
