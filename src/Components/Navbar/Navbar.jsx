@@ -4,9 +4,9 @@ import Logo from "../../assets/apple-icon1.png";
 const Navbar = () => {
   const navLinks = [
     { name: "Inicio", path: "/" },
-    { name: "Catálogo", path: "/" },
-    { name: "Contacto", path: "/" },
-    { name: "Nosotros", path: "/" },
+    { name: "Catálogo", path: "/catalogo" },
+    { name: "Contacto", path: "/contacto" },
+    { name: "Nosotros", path: "/nosotros" },
   ];
 
   const [isScrolled, setIsScrolled] = React.useState(false);
