@@ -3,6 +3,7 @@ import lanzamiento1 from "../../assets/lanzamiento-1.png";
 import lanzamiento2 from "../../assets/lanzamiento-2.png";
 import lanzamiento3 from "../../assets/lanzamiento-3.png";
 import lanzamiento4 from "../../assets/lanzamiento-4.png";
+import { Link } from "react-router-dom";
 
 const Lanzamientos = () => {
   const [stopScroll, setStopScroll] = React.useState(false);
@@ -70,7 +71,7 @@ const Lanzamientos = () => {
 
       <div className="flex items-center justify-center mt-20">
         <button className="bg-black text-white border hover:border-slate-400/70 rounded-full px-6 py-2 text-sm sm:text-base">
-          Explorá nuestro catálogo
+          <Link to={"/catalogo"}>Explorá nuestro catálogo</Link>  
         </button>
       </div>
     </div>

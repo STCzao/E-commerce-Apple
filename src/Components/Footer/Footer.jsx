@@ -14,25 +14,6 @@ const Footer = () => {
               productos Apple.
             </p>
           </div>
-          <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
-            <div>
-              <h2 className="font-semibold mb-5">Secciones</h2>
-              <ul className="text-sm space-y-2">
-                <li>
-                  <a href="#">Inicio</a>
-                </li>
-                <li>
-                  <a href="#">Catálogo</a>
-                </li>
-                <li>
-                  <a href="#">Productos</a>
-                </li>
-                <li>
-                  <a href="#">Nosotros</a>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
         <p className="pt-4 text-center text-sm pb-5">
           © 2025 STCzao. Todos los derechos reservados.
