@@ -103,7 +103,7 @@ const ContactoForm = () => {
                 type="tel"
                 name="Teléfono"
                 className="h-full text-white px-2 w-full outline-none bg-transparent autofill:bg-transparent"
-                placeholder="Ingrese un teléfono válido"
+                placeholder="Ingrese un teléfono"
                 value={capturarTelefono}
                 onChange={(e) => setCapturarTelefono(e.target.value)}
               />
