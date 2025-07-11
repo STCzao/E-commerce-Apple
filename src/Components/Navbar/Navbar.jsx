@@ -5,8 +5,8 @@ const Navbar = () => {
   const navLinks = [
     { name: "Inicio", path: "/" },
     { name: "Catálogo", path: "/catalogo" },
-    { name: "Contacto", path: "/contacto" },
     { name: "Nosotros", path: "/nosotros" },
+    { name: "Contacto", path: "/contacto" },
   ];
 
   const [isScrolled, setIsScrolled] = React.useState(false);

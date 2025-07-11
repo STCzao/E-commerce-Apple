@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import ContactoForm from "../ContactoForm/ContactoForm";
+import Footer from "../Footer/Footer";
 
 const ContactoComponente = () => {
   return (
@@ -15,7 +16,7 @@ const ContactoComponente = () => {
           }}
           className="flex flex-col items-center text-white/90"
         >
-          <motion.span className="text-5xl font-semibold mb-15">
+          <motion.span className="flex text-center text-5xl font-semibold mb-15">
             ¿Ocurrió algo? Comunicate con nuestro equipo de soporte
           </motion.span>
           <motion.span
@@ -32,6 +33,7 @@ const ContactoComponente = () => {
           </motion.span>
         </motion.div>
       </div>
+      <Footer/>
     </div>
   );
 };
