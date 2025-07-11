@@ -5,6 +5,7 @@ const ContactoForm = () => {
   const [result, setResult] = useState("");
   const [capturarNombre, setCapturarNombre] = useState("");
   const [capturarTelefono, setCapturarTelefono] = useState("");
+  const [capturarEmail, setCapturarEmail] = useState("");
   const [capturarMensaje, setCapturarMensaje] = useState("");
 
   const [errors, setErrors] = useState({});
@@ -25,6 +26,16 @@ const ContactoForm = () => {
       isValid = false;
     } else if (!/^\d{10,15}$/.test(capturarTelefono)) {
       newErrors.telefono = "Ingrese un número de teléfono válido.";
+      isValid = false;
+    }
+
+    if (capturarEmail.trim() === "") {
+      newErrors.email = "El email es obligatorio.";
+      isValid = false;
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(capturarEmail)
+    ) {
+      newErrors.email = "Ingrese un email válido.";
       isValid = false;
     }
 
@@ -63,6 +74,7 @@ const ContactoForm = () => {
       event.target.reset();
       setCapturarNombre("");
       setCapturarTelefono("");
+      setCapturarEmail("");
       setCapturarMensaje("");
       setErrors({});
     } else {
@@ -110,6 +122,22 @@ const ContactoForm = () => {
               {errors.telefono && (
                 <span className="text-red-400 text-xs mt-1">
                   {errors.telefono}
+                </span>
+              )}
+            </div>
+            <label className="font-medium text-white">Email</label>
+            <div className="flex items-center mt-2 mb-4 h-10 pl-3 border border-slate-300 rounded-full focus-within:ring-2 focus-within:ring-white transition-all overflow-hidden">
+              <input
+                type="mail"
+                name="Email"
+                className="h-full text-white px-2 w-full outline-none bg-transparent autofill:bg-transparent"
+                placeholder="Ingrese su email"
+                value={capturarEmail}
+                onChange={(e) => setCapturarEmail(e.target.value)}
+              />
+              {errors.email && (
+                <span className="text-red-400 text-xs mt-1">
+                  {errors.email}
                 </span>
               )}
             </div>
