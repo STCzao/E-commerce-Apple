@@ -11,6 +11,8 @@ const CatalogoComponente = () => {
   const categorias = [
     { name: "iPhones", to: "/iPhone" },
     { name: "iPads", to: "/iPad" },
+    { name: "Macs", to: "/Mac" },
+    { name: "Apple Watchs", to: "/Watch" },
   ];
 
   const handleSelect = (categoria) => {
