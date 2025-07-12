@@ -1,6 +1,6 @@
 import { image } from "framer-motion/client";
 
-export const cardsCatalogo = [
+export const iPhonesCatalogo = [
   {
     id: 1,
     name: "iPhone 16",
@@ -49,5 +49,133 @@ export const cardsCatalogo = [
     image:
       "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone15-digitalmat-gallery-4-202309?wid=728&hei=666&fmt=png-alpha&.v=NkhGM3Yvbkc1OWtnb1BCdWdROVRSK21WVFhyY3phSHE0c0dmYXl5WVVReHUrR0lqbjI0aE84b21HR0crWjlkeTJSWWg0TDRLSXM4czBZQjZvUHdsVExoZnZwNkp3Tk1LK3ExM0JYS1BwVVlzQ0pUbWFCbmdEa2UrQXJObzNKK3k",
     price: "USD799",
+  },
+];
+
+export const iPadsCatalogo = [
+  {
+    id: 1,
+    name: "iPad Pro 11-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipadpro11-digitalmat-gallery-1-202404?wid=728&hei=666&fmt=jpeg&qlt=90&.v=UXVFY3VaaTg1Y0ZJTnlIMXY0b1VhZlRhSXFkOFhqdTgvUmc4VitXa2VzZFJ4eU1GZzRtNm5oQnN2QW1zUW9UeFl1V3dXQmdJWnFRbkcraVFaYnkzVFd5T3RkT0J1ZUFOQnovVVk3R3dLM0ltbzVCSGtEbW9RaTNsbTM2bmdVY3g",
+    price: "USD999",
+  },
+  {
+    id: 2,
+    name: "iPad Pro 13-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipadpro13-digitalmat-gallery-1-202404?wid=728&hei=666&fmt=png-alpha&.v=cmVndzVraElDT2IwR1hxL1FWWUYxUFRhSXFkOFhqdTgvUmc4VitXa2VzZFJ4eU1GZzRtNm5oQnN2QW1zUW9UeFRnWXNaUGkzWFF6Q0FVUXZLQlA2QVJzajl1Z3B2NFRSeldmSW5hQ2dEQTBqdUY2Q0VBYjZyaUpzV0tFQnNKcVc",
+    price: "USD1299",
+  },
+  {
+    id: 3,
+    name: "iPad Air 11-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipadair11-digitalmat-gallery-1-202404?wid=728&hei=666&fmt=jpeg&qlt=90&.v=VS9YcytCQzBPQkZDTTZaK2ZJcVRudlRhSXFkOFhqdTgvUmc4VitXa2VzZFJ4eU1GZzRtNm5oQnN2QW1zUW9UeFl1V3dXQmdJWnFRbkcraVFaYnkzVFd5T3RkT0J1ZUFOQnovVVk3R3dLM0tOSU9kS0NoY0dpYTVVSjVmNlZNQU0",
+    price: "USD599",
+  },
+  {
+    id: 4,
+    name: "iPad Air 13-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipadair13-digitalmat-gallery-1-202404?wid=728&hei=666&fmt=p-jpg&qlt=95&.v=akNNS3d4NGRNYkZmT2JMQmlTVE1NdlRhSXFkOFhqdTgvUmc4VitXa2VzZFJ4eU1GZzRtNm5oQnN2QW1zUW9UeEZGMGUwb1Y3aUJoOFNtZnEvQXJFMFBTbVJaZE1KcjZWb280ODhEa2FMMVh6QnQ1QjQvNXF4YktXcy9lMTkxY0E",
+    price: "USD799",
+  },
+  {
+    id: 5,
+    name: "iPad",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-digitalmat-gallery-1-202210?wid=728&hei=666&fmt=png-alpha&.v=b09yUUVmdlhWdlN1cWxTVitvUG5xTmxsTzVKU05XZEpBL0Y1VXhvbVNlb1RDMFgyWE5CaGc1dHIrSkVKb1NNV1M0TjRWdzF2UjRGVEY0c3dBQVZ6VFFYbnBWVlpIWWpSZ1ZkR3BYRlE3REE",
+    price: "USD349",
+  },
+  {
+    id: 6,
+    name: "iPad",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-digitalmat-gallery-1-202210?wid=728&hei=666&fmt=png-alpha&.v=b09yUUVmdlhWdlN1cWxTVitvUG5xTmxsTzVKU05XZEpBL0Y1VXhvbVNlb1RDMFgyWE5CaGc1dHIrSkVKb1NNV1M0TjRWdzF2UjRGVEY0c3dBQVZ6VFFYbnBWVlpIWWpSZ1ZkR3BYRlE3REE",
+    price: "USD349",
+  },
+  {
+    id: 7,
+    name: "iPad Mini",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-mini-digitalmat-gallery-1-202410?wid=730&hei=666&fmt=png-alpha&.v=MjNRcUJZaFJGdW5OWDBkalpxVnNQUFRhSXFkOFhqdTgvUmc4VitXa2VzY0oreFIyRDYzVHo4MlBaaCtwNWFVeVRnWXNaUGkzWFF6Q0FVUXZLQlA2QVN3OGVzU1dkUnRJb0hLQzFZczd4VDRsVTBjODR4eEZBUHl6NkVFbUdjekQ",
+    price: "USD499",
+  },
+];
+
+export const MacsCatalogo = [
+  {
+    id: 1,
+    name: "Mac Book Air 13-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/macbook-air-13-digitalmat-gallery-1-202503?wid=728&hei=666&fmt=png-alpha&.v=RWZDcE1Pa2MvREpxR2hwendCZFpRa2EvQmI5ZjZseVhPSEJZVkYxZ09JdFpUdXE4MkhYYjRLTVptRHE3NGNZdHhaVXN2UmVLZWxyY01GTDZmcDYxbitZbnd2dEloRUI0QkxmQVJESllzWlN5ekw2b3VPdnZLWU14ZXc2aDkvRXI",
+    price: "USD999",
+  },
+  {
+    id: 2,
+    name: "Mac Book Air 15-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/macbook-air-15-digitalmat-gallery-1-202503?wid=728&hei=666&fmt=png-alpha&.v=Q3BBdHFVMXlUN2xVZERKS2t4a0U2MGEvQmI5ZjZseVhPSEJZVkYxZ09JdFpUdXE4MkhYYjRLTVptRHE3NGNZdHhaVXN2UmVLZWxyY01GTDZmcDYxbitZbnd2dEloRUI0QkxmQVJESllzWlRWV3Z6anZ0ZWkvSXV1alk2MXNOMWs",
+    price: "USD1199",
+  },
+  {
+    id: 3,
+    name: "Mac Book Pro 14-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp-14-digitalmat-gallery-1-202410?wid=728&hei=666&fmt=png-alpha&.v=dmVFbEEyUXJ6Q0hEd1FjMFY3bE5FczNWK01TMHBhR0pZcm42OHQ2ODBjVVZYRUFzTnU5dXpMeUpXTHdIdkp5VDRob044alBIMUhjRGJwTW1yRE1oUG9oQ20zUjdkYWFQM0VDcG9EZ0J2dDMrNmVjbmk5c1V4VVk2VEt3TGcxekg",
+    price: "USD1599",
+  },
+  {
+    id: 4,
+    name: "Mac Book Pro 16-inch",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp-16-digitalmat-gallery-1-202410?wid=728&hei=666&fmt=jpeg&qlt=90&.v=MEZVZW13NFE5V2Zqa2RkTS8yRndVTTNWK01TMHBhR0pZcm42OHQ2ODBjVVZYRUFzTnU5dXpMeUpXTHdIdkp5VE1lSHdvOTh6OTZzV3lxaDVoZmhFbGVaZU1aODlOQjRhUGhEVUlmOWhBNE9jMjlVY0l1R3ArenAzSUxNRFZhcXY",
+    price: "USD2499",
+  },
+  {
+    id: 5,
+    name: "iMac",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/imac-digitalmat-gallery-2-202410?wid=728&hei=666&fmt=png-alpha&.v=OURsbmhReXErU1E1S050OGsrUXJyZUtjRVR0S0dVNVlOdVhpNlMwWjcrd1RDMFgyWE5CaGc1dHIrSkVKb1NNV1M0TjRWdzF2UjRGVEY0c3dBQVZ6VFYzenVkeExHQ2RFQW5HS2lnQkVmQkk",
+    price: "USD1399",
+  },
+];
+
+export const WatchsCatalogo = [
+  {
+    id: 1,
+    name: "Apple Watch Series 10",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-card-40-s10-202409?wid=680&hei=528&fmt=p-jpg&qlt=95&.v=RGt6QnVpU0piVDZnRHZnWmNNbHB2K2ZHc2lZZVE5Y2pUTmdlS3YybHlVMDgycjlDNGdlREhyeERCVjM1SXkycmorTlFRdUE1QXhRRzN4cmdvU2JhR3FpTitUTTlPUlNDNzkvdFRJaVgvNVU",
+    price: "USD399",
+  },
+  {
+    id: 2,
+    name: "Apple Watch Ultra 2",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-card-40-ultra2-202409?wid=680&hei=528&fmt=p-jpg&qlt=95&.v=Yldjd2t3Ymo3YVZBc2hwblI4VFkzc1FkOG4vNGZHeDYvWjBaQlFpMTQxQkMxQXc4S3pBZE5lUDJlTzVYSUYydFMwV0hhcmdVdXZzZ1NwTlFUaEgwTDdncHZPdnppK25SMUVJRElaTk5ad1E",
+    price: "USD799",
+  },
+  {
+    id: 3,
+    name: "Apple Watch SE",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-card-40-se-202503?wid=680&hei=528&fmt=p-jpg&qlt=95&.v=dFQyNjEycitpbFBFNXA5RHpaQjc1bWp0QmtENVFjQUJSNytJMStHcTduMDJzUm9kdjFCbFNETWhUL0NFUjdrYUNwdjgxNzdjcnlUVy83S0w5bWJ2TmpyRTJ5dVBWQXJ6YVN2NnYvelEvUUk",
+    price: "USD249",
+  },
+  {
+    id: 4,
+    name: "Apple Watch Hermes Series 10",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-card-40-hermes-202503?wid=680&hei=528&fmt=p-jpg&qlt=95&.v=Ly93VWF6a1dGOWJLL3RMM0s0eGZ6c2Z1UHRIN3Fac0RSa2hFYWw5Y0lGbEMxQXc4S3pBZE5lUDJlTzVYSUYydFMwV0hhcmdVdXZzZ1NwTlFUaEgwTDIzdW91N2ZNK2NZVUhjQlZFMCtvUVk",
+    price: "1249",
+  },
+  {
+    id: 5,
+    name: "Apple Watch Hermes Ultra 2",
+    image:
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-card-40-hermes-ultra-202503?wid=680&hei=528&fmt=p-jpg&qlt=95&.v=Ly93VWF6a1dGOWJLL3RMM0s0eGZ6bGptdm4xZHhxZWZzUlhoOU9Da0hNN2ZPOGdzbXFQKzNyOVN3L2NRSHJCNStFVlF6ZkRtZVJkbnBuR0wwNDgvSmhCZS9FcFNCVHFMK0laT1RCa2tPUlE0TXZta2lmM0VyWWI1SWtzbjQzNFE",
+    price: "1399",
   },
 ];
