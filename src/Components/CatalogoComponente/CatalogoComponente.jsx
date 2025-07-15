@@ -79,7 +79,7 @@ const CatalogoComponente = () => {
               </button>
 
               {isOpen && (
-                <ul className="w-full bg-black/60 border border-white rounded shadow-md mt-1 py-2 z-10 absolute top-full">
+                <ul className="w-full border border-white rounded shadow-md mt-1 py-2 z-10 absolute top-full">
                   {categorias.map((categoria) => (
                     <li
                       key={categoria.name}
