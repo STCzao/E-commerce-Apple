@@ -5,7 +5,6 @@ const Navbar = () => {
   const navLinks = [
     { name: "Inicio", path: "/" },
     { name: "Catálogo", path: "/catalogo" },
-    { name: "Nosotros", path: "/nosotros" },
     { name: "Contacto", path: "/contacto" },
   ];
 
@@ -59,17 +58,24 @@ const Navbar = () => {
         ))}
       </div>
 
-      <div className="hidden md:flex items-center gap-4">
-        <svg
-          className={`h-6 w-6 ${isScrolled ? "text-black" : "text-white"}`}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
+      <div className="hidden md:flex items-center gap-3">
+        <div
+          className={`${
+            isScrolled
+              ? "flex items-center border items-black pl-4 gap-2 border-black h-[46px] rounded-full overflow-hidden max-w-md"
+              : "flex items-center border pl-4 gap-2 border-white h-[46px] rounded-full overflow-hidden max-w-md"
+          }`}
         >
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
+          <input
+            type="text"
+            placeholder="Search"
+            className={`${
+              isScrolled
+                ? "w-full h-full outline-none text-black bg-transparent placeholder-black text-sm"
+                : "w-full h-full outline-none text-white bg-transparent placeholder-white text-sm"
+            }`}
+          />
+        </div>
         <button
           className={`${
             isScrolled ? "bg-black text-white" : "bg-white text-black"

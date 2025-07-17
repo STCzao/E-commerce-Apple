@@ -141,10 +141,6 @@ const Cards = () => {
           </div>
         </div>
       </div>
-
-      {/* Cards Details */}
-
-      <div></div>
     </div>
   );
 };

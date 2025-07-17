@@ -1,12 +1,20 @@
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Cards from "../Cards/Cards";
 import { motion } from "framer-motion";
+import {
+  iPadsCatalogo,
+  iPhonesCatalogo,
+  MacsCatalogo,
+  WatchsCatalogo,
+} from "../../../api";
 
-const CatalogoComponente = () => {
+const CatalogoComponente = ( characterName ) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [selected, setSelected] = React.useState("Categorías");
+  const [isLoading, setIsLoading] = useState(false);
+  const [save, isSave] = useState([]);
 
   const categorias = [
     { name: "iPhones", to: "/iPhone" },
@@ -24,6 +32,12 @@ const CatalogoComponente = () => {
       targetElement.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const handleRequest = async () => {
+
+  }
+
+  
 
   return (
     <div>
@@ -95,7 +109,6 @@ const CatalogoComponente = () => {
           </motion.span>
         </motion.div>
       </div>
-
       <Cards />
       <Footer />
     </div>
