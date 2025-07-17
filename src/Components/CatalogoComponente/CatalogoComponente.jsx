@@ -75,12 +75,12 @@ const CatalogoComponente = () => {
           <Cards busqueda={busqueda} />
         </div>
       ) : (
-        <>
+        <div className="text-center mb-25">
           <Cards busqueda={iPhonesCatalogo} title="iPhones" id="iPhone" />
           <Cards busqueda={iPadsCatalogo} title="iPads" id="iPad" />
           <Cards busqueda={MacsCatalogo} title="Macs" id="Mac" />
           <Cards busqueda={WatchsCatalogo} title="Apple Watchs" id="Watch" />
-        </>
+        </div>
       )}
       <Footer />
     </div>

@@ -21,7 +21,7 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
   const [selected, setSelected] = useState("Categorías");
 
   const handleSelect = (categoria) => {
-    setSelected(categoria.name);
+    setSelected("Categorías");
     setIsOpen(false);
     const targetId = categoria.to.slice(1);
     const targetElement = document.getElementById(targetId);
@@ -33,7 +33,7 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 700);
+      setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -105,11 +105,11 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
 
           {isOpen && (
             <ul
-              className={`absolute mt-1 w-full ${
+              className={`absolute mt-5 w-43 ${
                 isScrolled
-                  ? "text-black border-black"
+                  ? "text-black border-black bg-white/50"
                   : "text-white border-white"
-              } border rounded py-2 bg-transparent`}
+              } border rounded py-2`}
             >
               {categorias.map((categoria) => (
                 <li
@@ -147,7 +147,7 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
             onChange={(e) => setBuscarName(e.target.value)}
             className={`w-25 h-full outline-none bg-transparent text-sm ${
               isScrolled
-                ? "placeholder-gray-600 text-black"
+                ? "placeholder-black/70 text-black"
                 : "placeholder-white/70 text-white"
             }`}
           />
@@ -238,7 +238,7 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
           </button>
 
           {isOpen && (
-            <ul className="mt-2 space-y-2">
+            <ul className="mt-2 w-45">
               {categorias.map((categoria) => (
                 <li
                   key={categoria.name}
@@ -252,7 +252,7 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
           )}
         </div>
 
-        <div className="flex items-center border border-gray-400 pl-4 gap-2 h-[46px] rounded-full overflow-hidden w-3/4 max-w-xs">
+        <div className="flex items-center border border-black pl-4 gap-2 h-[46px] rounded-full overflow-hidden ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -264,10 +264,10 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
           </svg>
           <input
             type="text"
-            placeholder="Buscar productos..."
+            placeholder="Buscar"
             value={buscarName}
             onChange={(e) => setBuscarName(e.target.value)}
-            className="w-full h-full outline-none bg-transparent text-gray-800 placeholder-gray-500 text-sm"
+            className="w-25 h-full outline-none bg-transparent text-gray-800 placeholder-black/70 text-sm"
           />
         </div>
 
