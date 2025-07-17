@@ -4,11 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import ContactoPage from "./pages/ContactoPage.jsx";
 import CatalogoPage from "./pages/CatalogoPage.jsx";
-import { useState } from "react";
+
 
 const App = () => {
-
-  const [characterName, setCharacterName] = useState("");
 
   return (
     <BrowserRouter>
@@ -18,7 +16,7 @@ const App = () => {
             path="/"
             element={
               <>
-                <Navbar setCharacterName={setCharacterName}/>
+                <Navbar />
                 <HomePage />
                 <div>
                   <Footer />
@@ -28,7 +26,7 @@ const App = () => {
           />
 
           <Route path="/contacto" element={<ContactoPage />} />
-          <Route path="/catalogo" element={<CatalogoPage characterName={characterName}/>} />
+          <Route path="/catalogo" element={<CatalogoPage />} />
         </Routes>
       </div>
     </BrowserRouter>
