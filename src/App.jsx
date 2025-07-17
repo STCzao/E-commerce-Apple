@@ -3,10 +3,13 @@ import Footer from "./Components/Footer/Footer.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import ContactoPage from "./pages/ContactoPage.jsx";
-import NosotrosPage from "./pages/NosotrosPage.jsx";
 import CatalogoPage from "./pages/CatalogoPage.jsx";
+import { useState } from "react";
 
 const App = () => {
+
+  const [characterName, setCharacterName] = useState("");
+
   return (
     <BrowserRouter>
       <div>
@@ -15,7 +18,7 @@ const App = () => {
             path="/"
             element={
               <>
-                <Navbar />
+                <Navbar setCharacterName={setCharacterName}/>
                 <HomePage />
                 <div>
                   <Footer />
@@ -25,8 +28,7 @@ const App = () => {
           />
 
           <Route path="/contacto" element={<ContactoPage />} />
-          <Route path="/catalogo" element={<CatalogoPage />} />
-          <Route path="/nosotros" element={<NosotrosPage />} />
+          <Route path="/catalogo" element={<CatalogoPage characterName={characterName}/>} />
         </Routes>
       </div>
     </BrowserRouter>

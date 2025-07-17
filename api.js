@@ -68,7 +68,7 @@ export const iPhonesCatalogo = [
 
 export const iPadsCatalogo = [
   {
-    id: 1,
+    id: 8,
     name: "iPad Pro 11 Pulgadas",
     description:"Pantalla Ultra Retina XDR² Con ProMotion, gama cromática P3 y True Tone. Cristal nanotexturizado opcional.",
     image:
@@ -76,7 +76,7 @@ export const iPadsCatalogo = [
     price: "USD999",
   },
   {
-    id: 2,
+    id: 9,
     name: "iPad Pro 13 Pulgadas",
     description:"Pantalla Ultra Retina XDR² Con ProMotion, gama cromática P3 y True Tone. Cristal nanotexturizado opcional.",
     image:
@@ -84,7 +84,7 @@ export const iPadsCatalogo = [
     price: "USD1299",
   },
   {
-    id: 3,
+    id: 10,
     name: "iPad Air 11 Pulgadas",
     description:"La pantalla Liquid Retina ofrece una experiencia de visualización sorprendente e inmersiva.",
     image:
@@ -92,7 +92,7 @@ export const iPadsCatalogo = [
     price: "USD599",
   },
   {
-    id: 4,
+    id: 11,
     name: "iPad Air 13 Pulgadas",
     description:"La pantalla Liquid Retina ofrece una experiencia de visualización sorprendente e inmersiva.",
     image:
@@ -100,7 +100,7 @@ export const iPadsCatalogo = [
     price: "USD799",
   },
   {
-    id: 5,
+    id: 12,
     name: "iPad",
     description:"Diseño de pantalla completa con pantalla Liquid Retina de 11 pulgadas para una experiencia de visualización increíble.",
     image:
@@ -109,7 +109,7 @@ export const iPadsCatalogo = [
   },
   
   {
-    id: 6,
+    id: 13,
     name: "iPad Mini",
     description:"Impresionante pantalla Liquid Retina de 8,3 pulgadas con True Tone y amplia gama de colores P3.",
     image:
@@ -120,7 +120,7 @@ export const iPadsCatalogo = [
 
 export const MacsCatalogo = [
   {
-    id: 1,
+    id: 14,
     name: "Mac Book Air 13 Pulgadas",
     description:"La pantalla Liquid Retina de 13,6 pulgadas admite mil millones de colores nota.",
     image:
@@ -128,7 +128,7 @@ export const MacsCatalogo = [
     price: "USD999",
   },
   {
-    id: 2,
+    id: 15,
     name: "Mac Book Air 15 Pulgadas",
     description:"La pantalla Liquid Retina de 15,3 pulgadas admite mil millones de colores nota.",
     image:
@@ -136,7 +136,7 @@ export const MacsCatalogo = [
     price: "USD1199",
   },
   {
-    id: 3,
+    id: 16,
     name: "Mac Book Pro 14 Pulgadas",
     description:"La pantalla Liquid Retina XDR de 14,2 pulgadas ofrece un brillo máximo de 1600 nits y un brillo sostenido de hasta 1000 nits, con un contraste de 1 000 000:1. Con opción de nanotextura.",
     image:
@@ -144,7 +144,7 @@ export const MacsCatalogo = [
     price: "USD1599",
   },
   {
-    id: 4,
+    id: 17,
     name: "Mac Book Pro 16-inch",
     description:"La pantalla Liquid Retina XDR de 16,2 pulgadas ofrece un brillo máximo de 1600 nits y un brillo sostenido de hasta 1000 nits, con un contraste de 1 000 000:1. Con opción de nanotextura.",
     image:
@@ -152,7 +152,7 @@ export const MacsCatalogo = [
     price: "USD2499",
   },
   {
-    id: 5,
+    id: 18,
     name: "iMac",
     description:"La pantalla Retina 4.5K de 24 pulgadas cuenta con 500 nits de brillo y admite hasta mil millones de colores, con una opción de nanotextura para reducir el reflejo en entornos muy brillantes.",
     image:
@@ -163,7 +163,7 @@ export const MacsCatalogo = [
 
 export const WatchsCatalogo = [
   {
-    id: 1,
+    id: 19,
     name: "Apple Watch Series 10",
     description:"El Apple Watch más delgado hasta la fecha, con nuestra pantalla más grande. Incorpora una pantalla Retina OLED de gran angular siempre activa. nota.",
     image:
@@ -171,7 +171,7 @@ export const WatchsCatalogo = [
     price: "USD399",
   },
   {
-    id: 2,
+    id: 20,
     name: "Apple Watch Ultra 2",
     description:"El mejor reloj deportivo y de aventura tiene una resistente caja de titanio de 49 mm con resistencia al agua de 100 metros§ y resistencia al polvo IP6X.",
     image:
@@ -179,7 +179,7 @@ export const WatchsCatalogo = [
     price: "USD799",
   },
   {
-    id: 3,
+    id: 21,
     name: "Apple Watch SE",
     description:"Configura el Apple Watch para tus hijos,§ incluso si no tienen su propio iPhone.",
     image:
@@ -187,7 +187,7 @@ export const WatchsCatalogo = [
     price: "USD249",
   },
   {
-    id: 4,
+    id: 22,
     name: "Apple Watch Hermes Series 10",
     description:"El Apple Watch más delgado hasta la fecha, con nuestra pantalla más grande. Incorpora una pantalla Retina OLED de gran angular siempre activa. nota.",
     image:
@@ -195,7 +195,7 @@ export const WatchsCatalogo = [
     price: "USD1249",
   },
   {
-    id: 5,
+    id: 23,
     name: "Apple Watch Hermes Ultra 2",
     description:"El mejor reloj deportivo y de aventura tiene una resistente caja de titanio de 49 mm con resistencia al agua de 100 metros§ y resistencia al polvo IP6X.",
     image:
