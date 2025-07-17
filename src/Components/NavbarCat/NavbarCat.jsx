@@ -21,7 +21,7 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
   const [selected, setSelected] = useState("Categorías");
 
   const handleSelect = (categoria) => {
-    setSelected("Categorías");
+    setSelected(categoria.name);
     setIsOpen(false);
     const targetId = categoria.to.slice(1);
     const targetElement = document.getElementById(targetId);
