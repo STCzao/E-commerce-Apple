@@ -31,6 +31,13 @@ const CatalogoComponente = () => {
     [buscarName, data]
   );
 
+  {/* Guarde los elementos en un array con el nombre Data. Utilizo un UseMemo
+    para que los calculos no se realicen 2 veces. Filtramos el array que recibimos
+    para obtener un item; accedemos al mismo, lo transformamos en minuscula e iteramos
+    en el array almacenado en nuestro estado.
+    En esta caso, utilizamos el estado y la constante como bandera; tienen que 
+    existir si o si para que se efectúe el useMemo.*/}
+
   return (
     <div>
       <NavbarCat setBuscarName={setBuscarName} buscarName={buscarName} />
