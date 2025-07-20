@@ -1,14 +1,10 @@
-
 import React, { useState } from "react";
 
 const CardItem = ({ card }) => {
-  // Ahora, el estado 'flipped' se gestiona individualmente para CADA CardItem
   const [flipped, setFlipped] = useState(false);
 
   return (
     <div
-      // La key debe estar en el elemento más externo que se devuelve en el map
-      // (En Cards.jsx, la key se pasa a CardItem, y CardItem la aplica aquí)
       className="w-72 h-96 mx-auto cursor-pointer group"
       onClick={() => setFlipped(!flipped)}
     >
@@ -32,7 +28,7 @@ const CardItem = ({ card }) => {
           </div>
           <div className="w-full">
             <p className="mb-4">${card.price}</p>
-            <button className=" px-4 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-colors">
+            <button className=" px-4 py-2 bg-black text-white rounded-full transition-colors">
               Comprar
             </button>
           </div>
