@@ -36,9 +36,14 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
       setIsScrolled(window.scrollY > 10);
     };
 
+    {/* Si la ventana tiene un scroll mayor a los 10px, 
+      setisScrolled cambia su valor */}
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  {/* Seteamos y removemos un evento de window */}
 
   return (
     <nav

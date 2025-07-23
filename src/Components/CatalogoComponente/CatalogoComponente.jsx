@@ -76,6 +76,9 @@ const CatalogoComponente = () => {
         </motion.div>
       </div>
 
+      {/* Consultamos si el valor recibido en nuestro Navbar y que se guardo en el estado BuscarName 
+      coincide con lo obtenido del filter almacenado en nuestra variable busqueda */}
+
       {buscarName ? (
         <div className="text-center mt-20 mb-25">
           <div className="text-5xl">Resultados para: "{buscarName}"</div>
