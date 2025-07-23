@@ -5,6 +5,11 @@ const Cards = ({ busqueda, title, id }) => {
     return null;
   }
 
+  {
+    /* Consultamos si busqueda contiene algun valor o si existe una 
+    coincidencia con los valores obtenidos de carditem */
+  }
+
   return (
     <div className="text-center mt-20" id={id}>
       {title && <div className="text-5xl font-semibold mb-12">{title}</div>}
@@ -13,6 +18,7 @@ const Cards = ({ busqueda, title, id }) => {
           <CardItem key={card.id} card={card} />
         ))}
       </div>
+      {/* Utilizamos el metodo map para devolver un valor y recibimos card como parametro */}
     </div>
   );
 };

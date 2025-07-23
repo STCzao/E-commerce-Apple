@@ -9,6 +9,8 @@ const SelectImage = () => {
   useEffect(() => {
     const container = document.getElementById("thumbnail-container");
 
+    {/* El valor que almacena container es el id de nuestro elemento principal */}
+
     const handleClick = (e) => {
       if (e.target.classList.contains("thumb")) {
         const mainImage = document.getElementById("main-image");
@@ -18,12 +20,21 @@ const SelectImage = () => {
       }
     };
 
+    {/* La funcion handleclick evalua si la imagen que seleccionamos coincide con la principal
+      y previamente utilizada */}
+
     container?.addEventListener("click", handleClick);
 
     return () => {
       container?.removeEventListener("click", handleClick);
     };
+
+    {/* Si el contenido seleccionado existe, se agrega un evento y si es removido
+      como imagen principal, le quitamos ese evento para agregarle a otro */}
+
   }, []);
+
+  
 
   return (
     <div className="flex flex-col items-center mb-40">

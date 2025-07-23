@@ -3,6 +3,11 @@ import React, { useState } from "react";
 const CardItem = ({ card }) => {
   const [flipped, setFlipped] = useState(false);
 
+  {/* Creamos una tarjeta que obtiene los valores de nuestro API de 
+    manera dinamica; ademas utilizamos el estado flipped cuando hacemos click
+    en cada card y la card hace un traslado de 180 grados de manera sobre su
+    eje Y */}
+
   return (
     <div
       className="w-72 h-96 mx-auto cursor-pointer group"

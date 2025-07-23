@@ -43,7 +43,7 @@ const Lanzamientos = () => {
           className="scrolling-wrapper"
           style={{
             animationPlayState: stopScroll ? "paused" : "running",
-            animationDuration: `${cardData.length * 3}s`, // velocidad fija
+            animationDuration: `${cardData.length * 3}s`, 
           }}
         >
           {[...cardData, ...cardData].map((card, index) => (
