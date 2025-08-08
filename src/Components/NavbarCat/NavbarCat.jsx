@@ -180,9 +180,11 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
         </button>
       </div>
 
+      {/* Menu mobile */}
+
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 lg:hidden ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <button
@@ -195,9 +197,7 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
             stroke="currentColor"
             strokeWidth="2"
             viewBox="0 0 24 24"
-          >
-            <path d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          ></svg>
         </button>
 
         {navLinks.map((link, i) => (
