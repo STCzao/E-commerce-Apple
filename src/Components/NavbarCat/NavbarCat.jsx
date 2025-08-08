@@ -36,14 +36,18 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    {/* Si la ventana tiene un scroll mayor a los 10px, 
-      setisScrolled cambia su valor */}
+    {
+      /* Si la ventana tiene un scroll mayor a los 10px, 
+      setisScrolled cambia su valor */
+    }
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  {/* Seteamos y removemos un evento de window */}
+  {
+    /* Seteamos y removemos un evento de window */
+  }
 
   return (
     <nav
@@ -275,10 +279,6 @@ const NavbarCat = ({ buscarName, setBuscarName }) => {
             className="w-25 h-full outline-none bg-transparent text-gray-800 placeholder-black/70 text-sm"
           />
         </div>
-
-        <button className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
-          Iniciar Sesión
-        </button>
       </div>
     </nav>
   );
