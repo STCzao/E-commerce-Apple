@@ -58,15 +58,7 @@ const Navbar = () => {
         ))}
       </div>
 
-      <div className="hidden md:flex items-center gap-3">
-        <button
-          className={`${
-            isScrolled ? "bg-black text-white" : "bg-white text-black"
-          } px-8 py-2.5 rounded-full ml-4 transition-all duration-500`}
-        >
-          Iniciar Sesión
-        </button>
-      </div>
+      <div className="hidden md:flex items-center gap-3"></div>
 
       <div className="flex items-center gap-3 md:hidden">
         <svg
