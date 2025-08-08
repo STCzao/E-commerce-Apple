@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 
 const CardItem = ({ card }) => {
+  const compraLink = [{ name: "Comprar", path: "/compra" }];
+
   const [flipped, setFlipped] = useState(false);
 
-  {/* Creamos una tarjeta que obtiene los valores de nuestro API de 
+  {
+    /* Creamos una tarjeta que obtiene los valores de nuestro API de 
     manera dinamica; ademas utilizamos el estado flipped cuando hacemos click
     en cada card y la card hace un traslado de 180 grados de manera sobre su
-    eje Y */}
+    eje Y */
+  }
 
   return (
     <div
-      className="w-72 h-96 mx-auto cursor-pointer group"
+      className="w-72 h-96 mx-auto group"
       onClick={() => setFlipped(!flipped)}
     >
       <div
@@ -33,8 +37,12 @@ const CardItem = ({ card }) => {
           </div>
           <div className="w-full">
             <p className="mb-4">${card.price}</p>
-            <button className=" px-4 py-2 bg-black text-white rounded-full transition-colors">
-              Comprar
+            <button className=" px-4 py-2 bg-black text-white rounded-full transition-colors cursor-pointer ">
+              {compraLink.map((link, i) => (
+                <a key={i} href={link.path}>
+                  {link.name}
+                </a>
+              ))}
             </button>
           </div>
         </div>
