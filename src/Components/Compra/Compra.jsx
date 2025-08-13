@@ -40,13 +40,20 @@ const Compra = () => {
             className="text-xl"
           >
             Contáctate con nuestro equipo de ventas:
-            <div className="flex items-center justify-between">
-              <button className="mt-10 bg-white/10 text-white/80 border hover:border-slate-400/70 rounded-full px-6 py-2 text-sm sm:text-base">
-                <Link to={"/"}>Volver al inicio</Link>
-              </button>
-              <button className="mt-10 bg-white/10 text-white/80 border hover:border-slate-400/70 rounded-full px-6 py-2 text-sm sm:text-base">
-                <Link to={"/catalogo"}>Volver al catálogo</Link>
-              </button>
+            <div className="flex flex-col items-center">
+              <div className="mt-10 bg-green-500/60 text-white border hover:border-slate-400/70 rounded-sm px-6 py-2 text-sm sm:text-base ">
+                <button>
+                  <a href="https://wa.me/543816754618">WhatsApp</a>
+                </button>
+              </div>
+              <div>
+                <button className="ml-3 mt-10 bg-white/10 text-white/80 border hover:border-slate-400/70 rounded-full px-6 py-2 text-sm sm:text-base">
+                  <Link to={"/"}>Volver al inicio</Link>
+                </button>
+                <button className="ml-4 mt-10 bg-white/10 text-white/80 border hover:border-slate-400/70 rounded-full px-6 py-2 text-sm sm:text-base">
+                  <Link to={"/catalogo"}>Volver al catálogo</Link>
+                </button>
+              </div>
             </div>
           </motion.p>
         </div>
