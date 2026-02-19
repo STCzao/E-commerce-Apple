@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 const Compra = () => {
   return (
@@ -58,6 +59,7 @@ const Compra = () => {
           </motion.p>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

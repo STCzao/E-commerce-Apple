@@ -157,7 +157,7 @@ const ContactoForm = () => {
             )}
             <button
               type="submit"
-              className="bg-white/80 flex items-center justify-center text-black gap-1 mt-10 border hover:border-slate-400/70 text-black/80 py-2 px-6 w-full rounded-full"
+              className="bg-white/80 cursor-pointer flex items-center justify-center text-black gap-1 mt-10 border hover:border-slate-400/70 text-black/80 py-2 px-6 w-full rounded-full"
             >
               Enviar
             </button>

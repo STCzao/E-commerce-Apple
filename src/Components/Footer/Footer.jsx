@@ -16,7 +16,7 @@ const Footer = () => {
           </div>
         </div>
         <p className="pt-4 text-center text-sm pb-5">
-          © 2025 STCzao. Todos los derechos reservados.
+          © 2025 Santiago Coronel. Todos los derechos reservados.
         </p>
       </footer>
     </div>
