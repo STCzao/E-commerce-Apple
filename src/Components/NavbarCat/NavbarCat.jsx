@@ -4,7 +4,7 @@ import Logo from "../../assets/apple-icon1.png"; // Asegúrate de que la ruta se
 const NavbarCat = ({ buscarName, setBuscarName }) => {
   const navLinks = [
     { name: "Inicio", path: "/" },
-    { name: "Catálogo", path: "/catalogo" },
+    { name: "Soporte", path: "/soporte" },
   ];
 
   const categorias = [
