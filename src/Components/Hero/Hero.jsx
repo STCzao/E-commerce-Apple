@@ -1,6 +1,6 @@
 "use client";
-
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -41,21 +41,23 @@ const Hero = () => {
           >
             Sumérgete en el mundo Apple
           </motion.p>
-          <motion.button
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            transition={{
-              duration: 0.3,
-              delay: 0.8,
-            }}
-            className="bg-white/80 cursor-pointer flex items-center justify-center text-black border hover:border-slate-400/70 text-black/80 py-2 px-4 rounded-full"
-          >
-            Ver catálogo
-          </motion.button>
+          <Link to={"/catalogo"}>
+            <motion.button
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                duration: 0.3,
+                delay: 0.8,
+              }}
+              className="bg-white/80 cursor-pointer flex items-center justify-center text-black border hover:border-slate-400/70 text-black/80 py-2 px-4 rounded-full"
+            >
+              Ver catálogo
+            </motion.button>
+          </Link>
         </div>
       </div>
     </div>

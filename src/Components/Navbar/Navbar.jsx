@@ -81,7 +81,7 @@ const Navbar = () => {
         }`}
       >
         <button
-          className="ralative top-6 right-6 p-2"
+          className="absolute top-6 right-6 p-2"
           onClick={() => setIsMenuOpen(false)}
         >
           <svg
@@ -90,7 +90,9 @@ const Navbar = () => {
             stroke="currentColor"
             strokeWidth="2"
             viewBox="0 0 24 24"
-          ></svg>
+          >
+            <path d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
         </button>
 
         {navLinks.map((link, i) => (
