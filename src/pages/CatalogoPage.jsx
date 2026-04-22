@@ -1,5 +1,5 @@
 import React from "react";
-import CatalogoComponente from "../Components/CatalogoComponente/CatalogoComponente";
+import CatalogoComponente from "../features/catalog/components/CatalogoComponente/CatalogoComponente";
 
 const CatalogoPage = () => {
   return (

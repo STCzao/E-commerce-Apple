@@ -1,4 +1,4 @@
-import Compra from "../Components/Compra/Compra";
+import Compra from "../features/purchase/components/Compra/Compra";
 
 const CompraPage = () => {
   return (

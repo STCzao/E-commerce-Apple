@@ -1,5 +1,5 @@
 import React from "react";
-import ContactoComponente from "../Components/ContactoComponente/ContactoComponente";
+import ContactoComponente from "../features/contact/components/ContactoComponente/ContactoComponente";
 
 const ContactoPage = () => {
   return (
