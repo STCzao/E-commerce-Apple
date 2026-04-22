@@ -2,6 +2,8 @@
 @import "tailwindcss";
 
 * { font-family: Outfit; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .font-playfair { font-family: Playfair !important; }
 
 body {
@@ -21,11 +23,13 @@ body {
 }
 
 /* Gradiente de texto — para secciones OSCURAS */
+/* Solo usar en elementos con texto directo (no con hijos inline-block) */
 .text-gradient {
-  background: linear-gradient(160deg, #ffffff 0%, #888 100%);
+  color: white; /* Fallback visible siempre */
+  background: linear-gradient(160deg, #ffffff 0%, #b0b0b0 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Gradiente de texto — para secciones CLARAS */
