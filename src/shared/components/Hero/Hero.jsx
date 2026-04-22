@@ -1,0 +1,122 @@
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Link } from "react-router-dom";
+const productImage = import.meta.env.VITE_ASSET_LANZAMIENTO_1;
+
+const Hero = () => {
+  const { scrollY } = useScroll();
+  const contentOpacity = useTransform(scrollY, [0, 280], [1, 0]);
+  const contentY       = useTransform(scrollY, [0, 280], [0, -40]);
+  const imgY           = useTransform(scrollY, [0, 600], ["0%", "10%"]);
+
+  return (
+    <div className="relative w-full min-h-screen overflow-hidden bg-[#111111]">
+      {/* Aurora */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="aurora-blob aurora-1" />
+        <div className="aurora-blob aurora-2" />
+        <div className="aurora-blob aurora-3" />
+      </div>
+
+      {/* Dot grid sutil */}
+      <div className="absolute inset-0 dot-grid-dark opacity-[0.45]" />
+
+      {/* Fade inferior — transición del hero oscuro a la página clara */}
+      <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#f5f5f7] to-transparent z-10" />
+
+      <motion.div
+        style={{ opacity: contentOpacity, y: contentY }}
+        className="relative z-20 min-h-screen flex flex-col lg:flex-row items-center justify-between px-8 md:px-16 lg:px-24 xl:px-32 max-w-8xl mx-auto gap-12 pt-24 pb-12"
+      >
+        {/* Texto */}
+        <div className="flex flex-col gap-7 lg:max-w-xl">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex items-center gap-2 w-fit px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-sm"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
+            <span className="text-white/50 text-xs tracking-[0.2em] uppercase">Distribuidor Autorizado Apple</span>
+          </motion.div>
+
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] text-gradient">
+            {"La mejor manera de comprar los productos que amas"
+              .split(" ")
+              .map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, filter: "blur(8px)", y: 14 }}
+                  animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.07, ease: "easeOut" }}
+                  className="mr-[0.2em] inline-block"
+                >
+                  {word}
+                </motion.span>
+              ))}
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.2 }}
+            className="text-white/35 text-lg leading-relaxed"
+          >
+            Tecnología de vanguardia. Garantía oficial. Soporte certificado en todo Argentina.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.4 }}
+            className="flex gap-3"
+          >
+            <Link to="/catalogo">
+              <button className="px-7 py-3 rounded-full text-sm font-medium bg-white text-black hover:bg-white/90 transition-colors">
+                Ver catálogo
+              </button>
+            </Link>
+            <Link to="/login">
+              <button className="px-7 py-3 rounded-full text-sm border border-white/15 text-white/70 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/25 transition-all backdrop-blur-sm">
+                Ingresar
+              </button>
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Imagen del producto */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          style={{ y: imgY }}
+          className="hidden lg:flex flex-1 justify-center items-center relative"
+        >
+          <div className="absolute w-80 h-80 rounded-full bg-white/[0.04] blur-3xl" />
+          <img
+            src={productImage}
+            alt="iPhone 16"
+            className="relative max-h-[75vh] w-auto object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.9)]"
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        style={{ opacity: useTransform(scrollY, [0, 100], [1, 0]) }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      >
+        <span className="text-white/20 text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent"
+        />
+      </motion.div>
+    </div>
+  );
+};
+
+export default Hero;
