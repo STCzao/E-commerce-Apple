@@ -11,14 +11,14 @@ const stats = [
 ];
 
 const HomePage = () => (
-  <div className="bg-[#f5f5f7]">
+  <div className="bg-white">
     <Hero />
 
-    {/* Stats */}
-    <div className="bg-white border-b border-black/[0.05]">
-      <div className="max-w-5xl mx-auto px-8 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+    {/* Stats — blanco continuo desde el fade del Hero */}
+    <div className="bg-white">
+      <div className="max-w-5xl mx-auto px-8 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-b border-black/[0.05]">
         {stats.map((s) => (
-          <div key={s.label} className="flex flex-col items-center gap-0.5">
+          <div key={s.label} className="flex flex-col items-center gap-1">
             <span className="text-2xl font-semibold text-[#1d1d1f]">{s.value}</span>
             <span className="text-xs text-[#6e6e73] tracking-wide">{s.label}</span>
           </div>
@@ -27,7 +27,7 @@ const HomePage = () => (
     </div>
 
     {/* CTA */}
-    <div className="py-24 px-6">
+    <div className="bg-[#f5f5f7] py-28 px-6">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -36,10 +36,10 @@ const HomePage = () => (
         className="max-w-2xl mx-auto text-center flex flex-col items-center gap-5"
       >
         <span className="text-[10px] tracking-[0.25em] uppercase text-[#6e6e73]">Acceso exclusivo</span>
-        <h3 className="text-4xl md:text-5xl font-semibold text-gradient-dark leading-tight">
+        <h2 className="text-4xl md:text-5xl font-semibold text-gradient-dark leading-tight">
           Unite a la familia Apple
-        </h3>
-        <p className="text-[#6e6e73] text-lg max-w-sm">
+        </h2>
+        <p className="text-[#6e6e73] text-lg max-w-sm leading-relaxed">
           Guardá tus favoritos y accedé a novedades antes que nadie.
         </p>
         <div className="flex gap-3 mt-2 flex-wrap justify-center">
@@ -57,8 +57,8 @@ const HomePage = () => (
       </motion.div>
     </div>
 
-    {/* Galería */}
-    <div className="bg-white pb-20">
+    {/* Galería — fondo blanco que empalma con el fade del Footer */}
+    <div className="bg-white">
       <SelectImagen />
     </div>
   </div>

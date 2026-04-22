@@ -9,19 +9,21 @@ const Hero = () => {
   const imgY           = useTransform(scrollY, [0, 600], ["0%", "10%"]);
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-[#111111]">
+    <section
+      aria-label="Presentación principal"
+      className="relative w-full min-h-screen overflow-hidden bg-[#111111]"
+    >
       {/* Aurora */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="aurora-blob aurora-1" />
         <div className="aurora-blob aurora-2" />
         <div className="aurora-blob aurora-3" />
       </div>
 
-      {/* Dot grid sutil */}
-      <div className="absolute inset-0 dot-grid-dark opacity-[0.45]" />
+      <div className="absolute inset-0 dot-grid-dark opacity-[0.45]" aria-hidden="true" />
 
-      {/* Fade inferior — transición del hero oscuro a la página clara */}
-      <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#f5f5f7] to-transparent z-10" />
+      {/* Fade inferior — hacia el blanco de la sección Stats */}
+      <div className="absolute bottom-0 inset-x-0 h-56 bg-gradient-to-t from-white to-transparent z-10" aria-hidden="true" />
 
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
@@ -35,11 +37,11 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex items-center gap-2 w-fit px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-sm"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
-            <span className="text-white/50 text-xs tracking-[0.2em] uppercase">Distribuidor Autorizado Apple</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" aria-hidden="true" />
+            <span className="text-white/65 text-xs tracking-[0.2em] uppercase">Distribuidor Autorizado Apple</span>
           </motion.div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] text-gradient">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] text-white">
             {"La mejor manera de comprar los productos que amas"
               .split(" ")
               .map((word, i) => (
@@ -59,7 +61,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.2 }}
-            className="text-white/35 text-lg leading-relaxed"
+            className="text-white/60 text-lg leading-relaxed"
           >
             Tecnología de vanguardia. Garantía oficial. Soporte certificado en todo Argentina.
           </motion.p>
@@ -76,7 +78,7 @@ const Hero = () => {
               </button>
             </Link>
             <Link to="/login">
-              <button className="px-7 py-3 rounded-full text-sm border border-white/15 text-white/70 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/25 transition-all backdrop-blur-sm">
+              <button className="px-7 py-3 rounded-full text-sm border border-white/20 text-white/80 bg-white/[0.06] hover:bg-white/[0.10] hover:border-white/30 transition-all backdrop-blur-sm">
                 Ingresar
               </button>
             </Link>
@@ -91,31 +93,18 @@ const Hero = () => {
           style={{ y: imgY }}
           className="hidden lg:flex flex-1 justify-center items-center relative"
         >
-          <div className="absolute w-80 h-80 rounded-full bg-white/[0.04] blur-3xl" />
+          <div className="absolute w-80 h-80 rounded-full bg-white/[0.04] blur-3xl" aria-hidden="true" />
           <img
             src={productImage}
-            alt="iPhone 16"
+            alt="iPhone — producto destacado"
+            fetchpriority="high"
             className="relative max-h-[75vh] w-auto object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.9)]"
           />
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        style={{ opacity: useTransform(scrollY, [0, 100], [1, 0]) }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
-      >
-        <span className="text-white/20 text-[10px] tracking-[0.3em] uppercase">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 7, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-          className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent"
-        />
-      </motion.div>
-    </div>
+      
+    </section>
   );
 };
 
