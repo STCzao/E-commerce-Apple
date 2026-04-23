@@ -6,7 +6,7 @@ import useFavoritesStore from "../../../../store/favoritesStore";
 import useCartDrawer from "../../../../store/cartDrawerStore";
 import useAuthStore from "../../../../store/authStore";
 
-const WA_NUMBER = "543816754618";
+const WA_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER;
 
 const WAIcon = ({ className = "w-4 h-4" }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">

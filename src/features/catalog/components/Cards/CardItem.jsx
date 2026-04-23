@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 
-const WA_NUMBER = "543816754618";
+const WA_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER;
 
 const WAIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 shrink-0" aria-hidden="true">
@@ -80,4 +81,4 @@ const CardItem = ({ card }) => {
   );
 };
 
-export default CardItem;
+export default memo(CardItem);

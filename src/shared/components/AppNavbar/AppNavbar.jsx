@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "../../../store/authStore";
 import useCatalogStore from "../../../store/catalogStore";
@@ -53,15 +53,30 @@ const AppNavbar = () => {
   const { isAuthenticated, clearAuth } = useAuthStore();
   const { search, setSearch }          = useCatalogStore();
 
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
+  const [inputValue, setInputValue] = useState(search);
   const desktopRef = useRef(null);
   const mobileRef  = useRef(null);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 60);
+    let ticking = false;
+    const fn = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 60);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setSearch(inputValue), 300);
+    return () => clearTimeout(timer);
+  }, [inputValue, setSearch]);
 
   const isDark = isHome && !scrolled;
 
@@ -73,7 +88,7 @@ const AppNavbar = () => {
 
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-  const handleChange = (val) => setSearch(val);
+  const handleChange = useCallback((val) => setInputValue(val), []);
 
   /* Navega al catálogo solo al hacer submit (Enter / click icono).
      No hace blur para no interrumpir el tipeo. */
@@ -93,6 +108,7 @@ const AppNavbar = () => {
           <img
             src={Logo}
             alt="Apple Store — inicio"
+            crossOrigin="anonymous"
             className={`h-7 md:h-8 opacity-80 transition-all duration-500 ${isDark ? "invert" : ""}`}
           />
         </Link>
@@ -136,7 +152,7 @@ const AppNavbar = () => {
               type="search"
               aria-label="Buscar producto"
               placeholder="Buscar producto"
-              value={search}
+              value={inputValue}
               onChange={(e) => handleChange(e.target.value)}
               className={`w-36 h-full outline-none bg-transparent text-sm pr-3 ${
                 isDark ? "text-white placeholder-white/30" : "text-[#1d1d1f] placeholder-[#6e6e73]/50"
@@ -182,7 +198,7 @@ const AppNavbar = () => {
             type="search"
             aria-label="Buscar producto"
             placeholder="Buscar..."
-            value={search}
+            value={inputValue}
             onChange={(e) => handleChange(e.target.value)}
             className="flex-1 h-full outline-none bg-transparent text-sm pr-3 text-[#1d1d1f] placeholder-[#6e6e73]/55"
           />

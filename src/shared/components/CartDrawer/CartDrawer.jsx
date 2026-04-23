@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useCartStore from "../../../store/cartStore";
 import useCartDrawer from "../../../store/cartDrawerStore";
 
-const WA_NUMBER = "543816754618";
+const WA_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER;
 
 const CartDrawer = () => {
   const { isOpen, close } = useCartDrawer();

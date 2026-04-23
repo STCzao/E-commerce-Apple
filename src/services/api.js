@@ -34,7 +34,8 @@ api.interceptors.response.use(
         tokenService.set(data.accessToken);
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
         return api(originalRequest);
-      } catch {
+      } catch (err) {
+        console.error("[api] Token refresh failed:", err?.message);
         tokenService.clear();
         window.location.href = "/login";
       }

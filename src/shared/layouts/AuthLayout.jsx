@@ -16,7 +16,7 @@ const AuthLayout = ({ children }) => (
     {/* Navegación */}
     <header className="relative z-10 flex items-center justify-between px-8 py-6">
       <Link to="/">
-        <img src={Logo} alt="logo" className="h-8 invert opacity-70" />
+        <img src={Logo} alt="logo" crossOrigin="anonymous" className="h-8 invert opacity-70" />
       </Link>
       <Link to="/" className="flex items-center gap-1.5 text-sm text-white/35 hover:text-white/65 transition-colors">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
