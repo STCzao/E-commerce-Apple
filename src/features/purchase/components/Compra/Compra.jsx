@@ -55,7 +55,7 @@ const Compra = () => (
             </p>
           </div>
           <a
-            href="https://wa.me/543816754618"
+            href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Iniciar conversación por WhatsApp"

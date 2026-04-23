@@ -33,7 +33,7 @@ const ContactoForm = () => {
 
     setResult("sending");
     const fd = new FormData(e.target);
-    fd.append("access_key", "bef8a01e-8777-42f5-9390-10e86de92262");
+    fd.append("access_key", import.meta.env.WEB_FORMS_KEY);
     const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: fd });
     const data = await res.json();
 

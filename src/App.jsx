@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import MainLayout from "./shared/layouts/MainLayout";
@@ -6,21 +7,25 @@ import CursorSpotlight from "./shared/components/CursorSpotlight/CursorSpotlight
 import CartDrawer from "./shared/components/CartDrawer/CartDrawer.jsx";
 import PageWrapper from "./shared/components/PageWrapper/PageWrapper.jsx";
 import ScrollToTop from "./shared/components/ScrollToTop/ScrollToTop.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import ContactoPage from "./pages/ContactoPage.jsx";
-import CatalogoPage from "./pages/CatalogoPage.jsx";
-import CompraPage from "./pages/CompraPage.jsx";
-import ProductoDetallePage from "./pages/ProductoDetallePage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import RegisterPage from "./pages/RegisterPage.jsx";
-import ConfirmarEmailPage from "./pages/ConfirmarEmailPage.jsx";
-import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
+import ErrorBoundary from "./shared/components/ErrorBoundary/ErrorBoundary.jsx";
+import PageLoadingFallback from "./shared/components/PageLoadingFallback/PageLoadingFallback.jsx";
+
+const HomePage = lazy(() => import("./pages/HomePage.jsx"));
+const ContactoPage = lazy(() => import("./pages/ContactoPage.jsx"));
+const CatalogoPage = lazy(() => import("./pages/CatalogoPage.jsx"));
+const CompraPage = lazy(() => import("./pages/CompraPage.jsx"));
+const ProductoDetallePage = lazy(() => import("./pages/ProductoDetallePage.jsx"));
+const LoginPage = lazy(() => import("./pages/LoginPage.jsx"));
+const RegisterPage = lazy(() => import("./pages/RegisterPage.jsx"));
+const ConfirmarEmailPage = lazy(() => import("./pages/ConfirmarEmailPage.jsx"));
+const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage.jsx"));
 
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (
     <>
       <ScrollToTop />
+      <Suspense fallback={<PageLoadingFallback />}>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageWrapper><MainLayout><HomePage /></MainLayout></PageWrapper>} />
@@ -34,15 +39,18 @@ const AnimatedRoutes = () => {
           <Route path="/auth/reset-password" element={<PageWrapper><AuthLayout><ResetPasswordPage /></AuthLayout></PageWrapper>} />
         </Routes>
       </AnimatePresence>
+      </Suspense>
     </>
   );
 };
 
 const App = () => (
   <BrowserRouter>
-    <CursorSpotlight />
-    <CartDrawer />
-    <AnimatedRoutes />
+    <ErrorBoundary>
+      <CursorSpotlight />
+      <CartDrawer />
+      <AnimatedRoutes />
+    </ErrorBoundary>
   </BrowserRouter>
 );
 

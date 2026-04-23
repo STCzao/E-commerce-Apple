@@ -19,6 +19,9 @@ const Card = ({ item, className = "", delay = 0 }) => (
     <img
       src={item.image}
       alt={item.title}
+      loading="lazy"
+      decoding="async"
+      crossOrigin="anonymous"
       className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
     />
     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import useAuthStore from "../../../store/authStore";
 const Logo = import.meta.env.VITE_ASSET_LOGO;

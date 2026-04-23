@@ -97,7 +97,8 @@ const Hero = () => {
           <img
             src={productImage}
             alt="iPhone — producto destacado"
-            fetchpriority="high"
+            fetchPriority="high"
+            crossOrigin="anonymous"
             className="relative max-h-[75vh] w-auto object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.9)]"
           />
         </motion.div>

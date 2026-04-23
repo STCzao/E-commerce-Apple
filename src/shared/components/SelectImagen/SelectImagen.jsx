@@ -57,7 +57,7 @@ const SelectImage = () => {
                   : "opacity-40 hover:opacity-70 border-black/[0.06]"
               }`}
             >
-              <img src={src} alt="" className="h-16 w-24 object-cover" />
+              <img src={src} alt="" loading="lazy" decoding="async" crossOrigin="anonymous" className="h-16 w-24 object-cover" />
             </button>
           ))}
         </div>
@@ -73,7 +73,7 @@ const SelectImage = () => {
         >
           <span className="text-2xl font-semibold text-gradient-dark mb-8">Míralo más de cerca.</span>
           <div className="relative w-full rounded-2xl overflow-hidden border border-black/[0.06] shadow-sm">
-            <img src={heroImage} alt="iPhone 16 Pro detalle" className="w-full" />
+            <img src={heroImage} alt="iPhone 16 Pro detalle" loading="lazy" decoding="async" crossOrigin="anonymous" className="w-full" />
           </div>
         </motion.div>
       )}

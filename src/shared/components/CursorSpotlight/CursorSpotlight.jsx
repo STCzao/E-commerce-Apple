@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
+const isTouch = window.matchMedia("(hover: none)").matches;
+
 const CursorSpotlight = () => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (isTouch) return;
     const move = ({ clientX: x, clientY: y }) => {
       if (!ref.current) return;
       ref.current.style.left = `${x}px`;
@@ -14,6 +17,8 @@ const CursorSpotlight = () => {
     window.addEventListener("mousemove", move, { passive: true });
     return () => window.removeEventListener("mousemove", move);
   }, [visible]);
+
+  if (isTouch) return null;
 
   return (
     <div
