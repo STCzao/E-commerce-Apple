@@ -1,12 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import useCartStore from "../../../store/cartStore";
 import useCartDrawer from "../../../store/cartDrawerStore";
+import useConfirmStore from "../../../store/confirmStore";
 
 const WA_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER;
 
 const CartDrawer = () => {
   const { isOpen, close } = useCartDrawer();
   const { items, removeItem, clearCart } = useCartStore();
+  const confirm = useConfirmStore((s) => s.confirm);
 
   const waMessage = encodeURIComponent(
     items.length
@@ -15,6 +17,26 @@ const CartDrawer = () => {
           .join("\n")}\n\n¿Podés darme más info?`
       : "Hola! Quiero consultar sobre sus productos."
   );
+
+  const handleRemove = (item) => {
+    confirm({
+      title: "Eliminar producto",
+      message: `¿Querés quitar "${item.name ?? item.nombreProducto}" del carrito?`,
+      confirmLabel: "Quitar",
+      danger: true,
+      onConfirm: () => removeItem(item.id ?? item._id),
+    });
+  };
+
+  const handleClear = () => {
+    confirm({
+      title: "Vaciar carrito",
+      message: "¿Querés quitar todos los productos del carrito?",
+      confirmLabel: "Vaciar",
+      danger: true,
+      onConfirm: clearCart,
+    });
+  };
 
   return (
     <AnimatePresence>
@@ -73,14 +95,13 @@ const CartDrawer = () => {
                 <AnimatePresence>
                   {items.map((item) => (
                     <motion.div
-                      key={item.id}
+                      key={item.id ?? item._id}
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
                       className="flex items-center gap-3 bg-[#f5f5f7] rounded-xl p-3"
                     >
-                      {/* Imagen */}
                       <div className="w-14 h-14 shrink-0 bg-white rounded-lg border border-black/[0.06] flex items-center justify-center overflow-hidden">
                         {item.image || item.imagenes?.[0]?.url ? (
                           <img
@@ -92,7 +113,6 @@ const CartDrawer = () => {
                           <span className="text-xs text-black/20">—</span>
                         )}
                       </div>
-                      {/* Info */}
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-[#1d1d1f] line-clamp-1">
                           {item.name ?? item.nombreProducto}
@@ -101,9 +121,8 @@ const CartDrawer = () => {
                           {item.price ?? item.precio}
                         </p>
                       </div>
-                      {/* Eliminar */}
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => handleRemove(item)}
                         aria-label={`Eliminar ${item.name ?? item.nombreProducto}`}
                         className="shrink-0 p-1.5 rounded-full hover:bg-black/[0.06] text-[#6e6e73] hover:text-red-500 transition-colors"
                       >
@@ -137,7 +156,7 @@ const CartDrawer = () => {
               </a>
               {items.length > 0 && (
                 <button
-                  onClick={clearCart}
+                  onClick={handleClear}
                   className="text-xs text-[#6e6e73] hover:text-red-500 transition-colors text-center"
                 >
                   Vaciar carrito

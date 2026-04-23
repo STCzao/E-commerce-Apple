@@ -1,11 +1,5 @@
 import ContactoComponente from "../features/contact/components/ContactoComponente/ContactoComponente";
 
-const ContactoPage = () => {
-  return (
-    <div>
-      <ContactoComponente />
-    </div>
-  );
-};
+const ContactoPage = () => <ContactoComponente />;
 
 export default ContactoPage;

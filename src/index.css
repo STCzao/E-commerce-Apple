@@ -6,8 +6,35 @@
 .font-playfair { font-family: Playfair !important; }
 
 body {
-  background: #f5f5f7;
+  background: #0a0a0a;
   color: #1d1d1f;
+}
+
+/* ── Paleta de metal / titanio ──────────────────────────
+   Usar estos valores para mantener coherencia material.
+   #0a0a0a  — surface dark (metal oscuro, no negro plano)
+   #111111  — elevated surface
+   #1c1c1e  — separator / divider (Apple system grouped)
+   #2c2c2e  — border hover
+   #6e6e73  — text secondary (Apple gray)
+   #aeaeb2  — metal / titanio claro (texto de acento)
+   #f2f2f7  — white surface (cards, forms)
+──────────────────────────────────────────────────────── */
+
+/* Regla de titanio — línea con reflejo metálico */
+.rule-metal {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #3a3a3c 20%, #aeaeb2 50%, #3a3a3c 80%, transparent);
+}
+
+/* Borde de arista de panel — luz rasante en el top de una sección */
+.edge-light {
+  background: linear-gradient(to right, transparent, rgba(174,174,178,0.18) 30%, rgba(174,174,178,0.22) 50%, rgba(174,174,178,0.18) 70%, transparent);
+}
+
+/* Superficie de metal oscuro */
+.surface-metal {
+  background: linear-gradient(160deg, #111111 0%, #080808 55%, #0d0d0d 100%);
 }
 
 /* Dot grid — tonos para fondos claros */
