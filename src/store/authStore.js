@@ -10,6 +10,9 @@ const useAuthStore = create((set) => ({
     set({ user, isAuthenticated: true });
   },
 
+  updateUser: (data) =>
+    set((s) => ({ user: s.user ? { ...s.user, ...data } : s.user })),
+
   clearAuth: () => {
     tokenService.clear();
     set({ user: null, isAuthenticated: false });

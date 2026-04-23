@@ -2,6 +2,9 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "../../../store/authStore";
 import useCatalogStore from "../../../store/catalogStore";
+import useConfirmStore from "../../../store/confirmStore";
+import useToastStore from "../../../store/toastStore";
+import useAuth from "../../../features/auth/hooks/useAuth";
 const Logo = import.meta.env.VITE_ASSET_LOGO;
 
 const WA_LINKS = [
@@ -44,16 +47,100 @@ const SearchSVG = ({ fill = "rgba(0,0,0,0.3)" }) => (
   </svg>
 );
 
+const UserMenu = ({ user, isDark }) => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  const confirm    = useConfirmStore((s) => s.confirm);
+  const addToast   = useToastStore((s) => s.addToast);
+  const { logout } = useAuth();
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const handleLogout = () => {
+    setOpen(false);
+    confirm({
+      title: "Cerrar sesión",
+      message: "¿Querés cerrar tu sesión?",
+      confirmLabel: "Salir",
+      danger: true,
+      onConfirm: async () => {
+        await logout();
+        addToast("Sesión cerrada", "info");
+        navigate("/");
+      },
+    });
+  };
+
+  const initial = user?.nombreUsuario?.[0]?.toUpperCase() ?? "U";
+
+  return (
+    <div ref={menuRef} className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-label="Menú de usuario"
+        aria-expanded={open}
+        className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all text-sm ${
+          isDark
+            ? "border-white/20 text-white/80 hover:border-white/35 hover:bg-white/[0.06]"
+            : "border-black/10 text-[#1d1d1f] hover:border-black/20 hover:bg-black/[0.03]"
+        }`}
+      >
+        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold overflow-hidden ${
+          isDark ? "bg-white/20" : "bg-black/[0.08]"
+        }`}>
+          {user?.img
+            ? <img src={user.img} alt="" className="w-full h-full object-cover" />
+            : initial}
+        </div>
+        <span className="max-w-[90px] truncate">{user?.nombreUsuario ?? "Perfil"}</span>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-44 bg-white rounded-2xl border border-black/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.12)] py-1.5 z-10">
+          <Link
+            to="/perfil"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-4 py-2 text-sm text-[#1d1d1f] hover:bg-black/[0.04] transition-colors"
+          >
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-4 h-4 text-[#6e6e73]">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+            </svg>
+            Mi perfil
+          </Link>
+          <div className="h-px bg-black/[0.05] my-1" />
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
+          >
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-4 h-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Cerrar sesión
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const AppNavbar = () => {
   const location   = useLocation();
   const navigate   = useNavigate();
   const isCatalog  = location.pathname === "/catalogo";
   const isHome     = location.pathname === "/";
 
-  const { isAuthenticated, clearAuth } = useAuthStore();
-  const { search, setSearch }          = useCatalogStore();
+  const { isAuthenticated, user } = useAuthStore();
+  const { search, setSearch }     = useCatalogStore();
 
-  const [scrolled, setScrolled]   = useState(false);
+  const [scrolled, setScrolled]     = useState(false);
   const [inputValue, setInputValue] = useState(search);
   const desktopRef = useRef(null);
   const mobileRef  = useRef(null);
@@ -78,20 +165,20 @@ const AppNavbar = () => {
     return () => clearTimeout(timer);
   }, [inputValue, setSearch]);
 
-  const isDark = isHome && !scrolled;
+  // Páginas que arrancan con sección oscura (header negro o full-dark)
+  const DARK_TOP_ROUTES = ["/", "/catalogo", "/soporte", "/login", "/register", "/perfil"];
+  const isDark = DARK_TOP_ROUTES.includes(location.pathname) && !scrolled;
 
-  const navBg       = isDark ? "py-5" : "py-3 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] shadow-[0_1px_0_0_rgba(0,0,0,0.04)]";
-  const linkActive  = isDark ? "text-white"  : "text-[#1d1d1f]";
-  const linkMuted   = isDark ? "text-white/55 hover:text-white" : "text-[#6e6e73] hover:text-[#1d1d1f]";
-  const ulActive    = isDark ? "bg-white/50"  : "bg-[#1d1d1f]/40";
-  const ulHover     = isDark ? "bg-white/40"  : "bg-[#1d1d1f]/30";
+  const navBg      = isDark ? "py-5" : "py-3 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] shadow-[0_1px_0_0_rgba(0,0,0,0.04)]";
+  const linkActive = isDark ? "text-white"  : "text-[#1d1d1f]";
+  const linkMuted  = isDark ? "text-white/55 hover:text-white" : "text-[#6e6e73] hover:text-[#1d1d1f]";
+  const ulActive   = isDark ? "bg-white/50"  : "bg-[#1d1d1f]/40";
+  const ulHover    = isDark ? "bg-white/40"  : "bg-[#1d1d1f]/30";
 
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const handleChange = useCallback((val) => setInputValue(val), []);
 
-  /* Navega al catálogo solo al hacer submit (Enter / click icono).
-     No hace blur para no interrumpir el tipeo. */
   const handleSubmit = (e) => {
     e?.preventDefault();
     if (!isCatalog) navigate("/catalogo");
@@ -134,7 +221,7 @@ const AppNavbar = () => {
             </Link>
           ))}
 
-          {/* Search — JSX inline, no nested component, para no perder foco */}
+          {/* Search */}
           <form
             onSubmit={handleSubmit}
             role="search"
@@ -162,17 +249,7 @@ const AppNavbar = () => {
 
           {/* Auth */}
           {isAuthenticated ? (
-            <button
-              onClick={clearAuth}
-              aria-label="Cerrar sesión"
-              className={`text-sm px-4 py-1.5 rounded-full border transition-all ${
-                isDark
-                  ? "border-white/20 text-white/65 hover:text-white hover:border-white/35"
-                  : "border-black/10 text-[#6e6e73] hover:text-[#1d1d1f] hover:border-black/20"
-              }`}
-            >
-              Salir
-            </button>
+            <UserMenu user={user} isDark={isDark} />
           ) : (
             <Link to="/login">
               <button className={`text-sm px-5 py-2 rounded-full font-medium transition-colors ${
@@ -205,7 +282,7 @@ const AppNavbar = () => {
         </form>
       </nav>
 
-      {/* ── Bottom nav móvil (aparece al hacer scroll) ────────────── */}
+      {/* ── Bottom nav móvil ──────────────────────────────────────── */}
       <nav
         aria-label="Navegación móvil"
         className={`fixed bottom-0 inset-x-0 z-50 md:hidden transition-all duration-500 ${
@@ -237,16 +314,24 @@ const AppNavbar = () => {
             {/* Auth en bottom bar */}
             <div className="flex flex-col items-center gap-1 px-3 py-1">
               {isAuthenticated ? (
-                <button
-                  onClick={clearAuth}
-                  aria-label="Cerrar sesión"
-                  className="flex flex-col items-center gap-1 text-white/50 hover:text-white/80 transition-colors"
+                <Link
+                  to="/perfil"
+                  className="flex flex-col items-center gap-1 transition-colors"
                 >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  <span className="text-[9px] tracking-wide font-medium">Salir</span>
-                </button>
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold overflow-hidden ${
+                    location.pathname === "/perfil" ? "bg-white/30 text-white" : "bg-white/10 text-white/50"
+                  }`}>
+                    {user?.img
+                      ? <img src={user.img} alt="" className="w-full h-full object-cover" />
+                      : (user?.nombreUsuario?.[0]?.toUpperCase() ?? "U")}
+                  </div>
+                  <span className={`text-[9px] tracking-wide font-medium ${
+                    location.pathname === "/perfil" ? "text-white" : "text-white/50"
+                  }`}>Perfil</span>
+                  {location.pathname === "/perfil" && (
+                    <span className="w-1 h-1 rounded-full bg-white/60" aria-hidden="true" />
+                  )}
+                </Link>
               ) : (
                 <Link to="/login" className="flex flex-col items-center gap-1 text-white/50 hover:text-white/80 transition-colors">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5" aria-hidden="true">

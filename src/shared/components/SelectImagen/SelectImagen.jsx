@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { clOptimize } from "../../utils/cloudinary";
 
 const images = [
-  import.meta.env.VITE_ASSET_HOME_1,
-  import.meta.env.VITE_ASSET_HOME_2,
-  import.meta.env.VITE_ASSET_HOME_3,
-  import.meta.env.VITE_ASSET_HOME_4,
+  clOptimize(import.meta.env.VITE_ASSET_HOME_1, { width: 1200 }),
+  clOptimize(import.meta.env.VITE_ASSET_HOME_2, { width: 1200 }),
+  clOptimize(import.meta.env.VITE_ASSET_HOME_3, { width: 1200 }),
+  clOptimize(import.meta.env.VITE_ASSET_HOME_4, { width: 1200 }),
 ];
-const heroImage = import.meta.env.VITE_ASSET_HOME_5;
+const heroImage = clOptimize(import.meta.env.VITE_ASSET_HOME_5, { width: 1400 });
 
 const SelectImage = () => {
   const [selected, setSelected] = useState(0);

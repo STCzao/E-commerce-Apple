@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { clOptimize } from "../../utils/cloudinary";
 
 const items = [
-  { title: "iPhone 16", sub: "La cámara que piensa.", image: import.meta.env.VITE_ASSET_LANZAMIENTO_1 },
-  { title: "iPhone 16 Pro Max", sub: "Titanio. El más potente.", image: import.meta.env.VITE_ASSET_LANZAMIENTO_2 },
-  { title: "iPhone 16e", sub: "Lo esencial, redefinido.", image: import.meta.env.VITE_ASSET_LANZAMIENTO_3 },
-  { title: "iPhone 15", sub: "Potencia a tu alcance.", image: import.meta.env.VITE_ASSET_LANZAMIENTO_4 },
+  { title: "iPhone 16",         sub: "La cámara que piensa.",      image: clOptimize(import.meta.env.VITE_ASSET_LANZAMIENTO_1, { width: 800 }) },
+  { title: "iPhone 16 Pro Max", sub: "Titanio. El más potente.",    image: clOptimize(import.meta.env.VITE_ASSET_LANZAMIENTO_2, { width: 800 }) },
+  { title: "iPhone 16e",        sub: "Lo esencial, redefinido.",    image: clOptimize(import.meta.env.VITE_ASSET_LANZAMIENTO_3, { width: 800 }) },
+  { title: "iPhone 15",         sub: "Potencia a tu alcance.",      image: clOptimize(import.meta.env.VITE_ASSET_LANZAMIENTO_4, { width: 800 }) },
 ];
 
 const Card = ({ item, className = "", delay = 0 }) => (

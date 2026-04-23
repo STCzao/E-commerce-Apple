@@ -10,6 +10,7 @@ const WAIcon = () => (
 );
 
 const CardItem = ({ card }) => {
+  const id    = card._id   ?? card.id;
   const name  = card.name  ?? card.nombreProducto;
   const price = card.price ?? card.precio;
   const image = card.image ?? card.imagenes?.[0]?.url;
@@ -19,11 +20,14 @@ const CardItem = ({ card }) => {
   );
 
   return (
-    <article className="group h-full flex flex-col bg-white rounded-2xl border border-black/[0.06] overflow-hidden hover:border-black/[0.12] hover:shadow-xl hover:shadow-black/[0.07] hover:-translate-y-0.5 transition-all duration-300">
+    <article className="group h-full flex flex-col bg-white rounded-2xl border border-black/[0.06] overflow-hidden hover:border-black/[0.10] hover:-translate-y-1 transition-all duration-300" style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.08)", "--tw-shadow-hover": "0 20px 60px rgba(0,0,0,0.35)" }}
+      onMouseEnter={e => e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,0.35)"}
+      onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.08)"}
+    >
 
       {/* Zona superior — navega al detalle */}
       <Link
-        to={`/catalogo/${card.id}`}
+        to={`/catalogo/${id}`}
         className="flex-1 flex flex-col focus-visible:outline-none"
         aria-label={`Ver detalle de ${name}`}
       >
@@ -34,18 +38,21 @@ const CardItem = ({ card }) => {
               src={image}
               alt={name}
               loading="lazy"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+                e.currentTarget.nextElementSibling?.removeAttribute("hidden");
+              }}
               className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
             />
-          ) : (
-            <div className="flex flex-col items-center gap-2 text-black/15" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-10 h-10">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <path strokeLinecap="round" d="M21 15l-5-5L5 21" />
-              </svg>
-              <span className="text-[10px] tracking-wide">Sin imagen</span>
-            </div>
-          )}
+          ) : null}
+          <div hidden={!!image} className="flex flex-col items-center gap-2 text-black/15" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-10 h-10">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path strokeLinecap="round" d="M21 15l-5-5L5 21" />
+            </svg>
+            <span className="text-[10px] tracking-wide">Sin imagen</span>
+          </div>
         </div>
 
         {/* Nombre y precio */}
@@ -60,7 +67,7 @@ const CardItem = ({ card }) => {
       {/* Zona de acciones — separada del Link principal */}
       <div className="px-3.5 pb-3.5 flex gap-2">
         <Link
-          to={`/catalogo/${card.id}`}
+          to={`/catalogo/${id}`}
           className="flex-1 py-2 rounded-full text-center text-xs font-medium bg-[#f5f5f7] text-[#1d1d1f] hover:bg-[#1d1d1f] hover:text-white transition-colors duration-200"
         >
           Ver detalle

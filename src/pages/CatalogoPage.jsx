@@ -1,13 +1,5 @@
 import CatalogoComponente from "../features/catalog/components/CatalogoComponente/CatalogoComponente";
 
-const CatalogoPage = () => {
-  return (
-    <div>
-      <div>
-        <CatalogoComponente />
-      </div>
-    </div>
-  );
-};
+const CatalogoPage = () => <CatalogoComponente />;
 
 export default CatalogoPage;

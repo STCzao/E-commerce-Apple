@@ -2,17 +2,19 @@ import { useState, useEffect } from "react";
 import { catalogService } from "../services/catalogService";
 
 const useCatalog = () => {
-  const [productos, setProductos] = useState([]);
+  const [productos, setProductos]   = useState([]);
   const [categorias, setCategorias] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState(null);
 
   const fetchProductos = async (params) => {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await catalogService.getProductos(params);
-      setProductos(data);
+      const { data } = await catalogService.getProductos({ limite: 100, ...params });
+      // Backend returns { total, productos: [...] }
+      const lista = Array.isArray(data) ? data : (data?.productos ?? []);
+      setProductos(lista);
     } catch (err) {
       setError(err.response?.data?.msg || "Error al cargar productos");
     } finally {
@@ -23,9 +25,9 @@ const useCatalog = () => {
   const fetchCategorias = async () => {
     try {
       const { data } = await catalogService.getCategorias();
-      setCategorias(data);
-    } catch (err) {
-      setError(err.response?.data?.msg || "Error al cargar categorías");
+      setCategorias(Array.isArray(data) ? data : (data?.categorias ?? []));
+    } catch {
+      // no-op: las categorías son opcionales para el filtro
     }
   };
 
