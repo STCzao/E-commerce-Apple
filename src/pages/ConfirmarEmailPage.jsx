@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { authService } from "../features/auth/services/authService";
@@ -8,11 +8,14 @@ const ConfirmarEmailPage = () => {
   const [status, setStatus] = useState("loading"); // loading | ok | error
   const [message, setMessage] = useState("");
   const [countdown, setCountdown] = useState(5);
+  const llamadaHecha = useRef(false);
   const navigate = useNavigate();
+  const token = searchParams.get("token");
 
   useEffect(() => {
-    const token = searchParams.get("token");
     if (!token) { setStatus("error"); setMessage("Token no encontrado."); return; }
+    if (llamadaHecha.current) return;
+    llamadaHecha.current = true;
 
     authService.confirmarEmail(token)
       .then(() => setStatus("ok"))
@@ -20,7 +23,7 @@ const ConfirmarEmailPage = () => {
         setStatus("error");
         setMessage(err.response?.data?.message || "El enlace es inválido o ya expiró.");
       });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (status !== "ok") return;

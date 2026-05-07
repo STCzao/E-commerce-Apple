@@ -8,7 +8,7 @@ export const authService = {
     api.post("/auth/registro", userData),
 
   confirmarEmail: (token) =>
-    api.get(`/auth/confirmar/${token}`),
+    api.post(`/auth/confirmar/${token}`),
 
   resetPassword: (token, contraseña) =>
     api.post(`/auth/reset-password/${token}`, { contraseña }),

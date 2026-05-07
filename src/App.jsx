@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import MainLayout from "./shared/layouts/MainLayout";
@@ -12,6 +12,8 @@ import PageLoadingFallback from "./shared/components/PageLoadingFallback/PageLoa
 import Toast from "./shared/components/Toast/Toast.jsx";
 import ConfirmModal from "./shared/components/ConfirmModal/ConfirmModal.jsx";
 import ProtectedRoute from "./shared/components/ProtectedRoute/ProtectedRoute.jsx";
+import { authService } from "./features/auth/services/authService";
+import useAuthStore from "./store/authStore";
 
 const HomePage             = lazy(() => import("./pages/HomePage.jsx"));
 const ContactoPage         = lazy(() => import("./pages/ContactoPage.jsx"));
@@ -47,16 +49,26 @@ const AnimatedRoutes = () => {
   );
 };
 
-const App = () => (
-  <BrowserRouter>
-    <ErrorBoundary>
-      <CursorSpotlight />
-      <CartDrawer />
-      <Toast />
-      <ConfirmModal />
-      <AnimatedRoutes />
-    </ErrorBoundary>
-  </BrowserRouter>
-);
+const App = () => {
+  const { setAuth, setInitialized } = useAuthStore();
+
+  useEffect(() => {
+    authService.refresh()
+      .then(({ data }) => setAuth(data.usuario, data.accessToken))
+      .catch(() => setInitialized());
+  }, []);
+
+  return (
+    <BrowserRouter>
+      <ErrorBoundary>
+        <CursorSpotlight />
+        <CartDrawer />
+        <Toast />
+        <ConfirmModal />
+        <AnimatedRoutes />
+      </ErrorBoundary>
+    </BrowserRouter>
+  );
+};
 
 export default App;
