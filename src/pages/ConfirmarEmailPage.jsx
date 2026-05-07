@@ -13,7 +13,11 @@ const ConfirmarEmailPage = () => {
   const token = searchParams.get("token");
 
   useEffect(() => {
-    if (!token) { setStatus("error"); setMessage("Token no encontrado."); return; }
+    if (!token) {
+      setStatus("error");
+      setMessage("Token no encontrado.");
+      return;
+    }
     if (llamadaHecha.current) return;
     llamadaHecha.current = true;
 
@@ -29,7 +33,10 @@ const ConfirmarEmailPage = () => {
     if (status !== "ok") return;
     const interval = setInterval(() => {
       setCountdown((n) => {
-        if (n <= 1) { clearInterval(interval); navigate("/login"); }
+        if (n <= 1) {
+          clearInterval(interval);
+          navigate("/login");
+        }
         return n - 1;
       });
     }, 1000);
@@ -41,27 +48,27 @@ const ConfirmarEmailPage = () => {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-sm bg-white/[0.07] backdrop-blur-xl border border-white/12 rounded-2xl p-8 shadow-2xl text-center"
+      className="w-full max-w-sm bg-white border border-black/[0.06] rounded-2xl p-8 shadow-sm text-center"
     >
       {status === "loading" && (
         <>
-          <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center mx-auto mb-5 animate-pulse bg-white/[0.05]" />
-          <p className="text-white/50 text-sm">Verificando tu cuenta...</p>
+          <div className="w-12 h-12 rounded-full border border-black/[0.06] flex items-center justify-center mx-auto mb-5 animate-pulse bg-black/[0.04]" />
+          <p className="text-[#6e6e73] text-sm">Verificando tu cuenta...</p>
         </>
       )}
 
       {status === "ok" && (
         <>
-          <div className="w-14 h-14 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center mx-auto mb-5">
-            <svg className="w-7 h-7 text-white/70" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+          <div className="w-14 h-14 rounded-full bg-black/[0.04] border border-black/[0.06] flex items-center justify-center mx-auto mb-5">
+            <svg className="w-7 h-7 text-[#1d1d1f]/60" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-white mb-2">¡Cuenta verificada!</h2>
-          <p className="text-white/40 text-sm mb-1">Tu correo fue confirmado exitosamente.</p>
-          <p className="text-white/25 text-xs mb-6">Redirigiendo al inicio de sesión en {countdown}s...</p>
+          <h2 className="text-xl font-semibold text-[#1d1d1f] mb-2">¡Cuenta verificada!</h2>
+          <p className="text-[#6e6e73] text-sm mb-1">Tu correo fue confirmado exitosamente.</p>
+          <p className="text-[#aeaeb2] text-xs mb-6">Redirigiendo al inicio de sesión en {countdown}s...</p>
           <Link to="/login">
-            <button className="w-full bg-white text-black font-medium py-3 rounded-xl text-sm hover:bg-white/90 transition-colors">
+            <button className="w-full bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-[#2c2c2e] transition-colors">
               Iniciar sesión ahora
             </button>
           </Link>
@@ -75,10 +82,10 @@ const ConfirmarEmailPage = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-white mb-2">Enlace inválido</h2>
-          <p className="text-white/40 text-sm mb-6">{message}</p>
+          <h2 className="text-xl font-semibold text-[#1d1d1f] mb-2">Enlace inválido</h2>
+          <p className="text-[#6e6e73] text-sm mb-6">{message}</p>
           <Link to="/login">
-            <button className="w-full bg-white text-black font-medium py-3 rounded-xl text-sm hover:bg-white/90 transition-colors">
+            <button className="w-full bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-[#2c2c2e] transition-colors">
               Volver al inicio de sesión
             </button>
           </Link>
