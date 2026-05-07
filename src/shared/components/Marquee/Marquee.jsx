@@ -17,7 +17,7 @@ const Track = ({ reverse = false }) => (
 );
 
 const Marquee = () => (
-  <div className="mq-root" aria-hidden="true">
+  <div className="mq-root hidden sm:block" aria-hidden="true">
     <Track />
     <div className="mq-fade-l" />
     <div className="mq-fade-r" />

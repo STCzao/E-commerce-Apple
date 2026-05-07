@@ -1,10 +1,5 @@
-import AuthLayout from "../shared/components/AuthLayout/AuthLayout";
 import RegisterForm from "../features/auth/components/RegisterForm/RegisterForm";
 
-const RegisterPage = () => (
-  <AuthLayout>
-    <RegisterForm />
-  </AuthLayout>
-);
+const RegisterPage = () => <RegisterForm />;
 
 export default RegisterPage;

@@ -3,9 +3,18 @@ import { motion } from "framer-motion";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
-/* ── Inputs con estilo claro (carta blanca sobre fondo oscuro) ── */
 const inputCls = "w-full bg-[#f5f5f7] border border-black/[0.08] rounded-xl px-4 py-3 text-[#1d1d1f] placeholder-[#6e6e73]/60 text-sm outline-none focus:border-black/20 focus:bg-white transition-colors";
-const errCls   = "text-red-500 text-xs px-1";
+const errCls = "text-red-500 text-xs px-1";
+const labelCls = "text-xs font-medium text-[#6e6e73] px-1";
+
+const validate = ({ correo, contrasena }) => {
+  const e = {};
+  if (!correo.trim()) e.correo = "El correo es requerido.";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) e.correo = "Ingresá un correo válido.";
+  if (!contrasena) e.contrasena = "La contraseña es requerida.";
+  else if (contrasena.length < 8) e.contrasena = "Mínimo 8 caracteres.";
+  return e;
+};
 
 const EyeIcon = ({ visible }) =>
   visible ? (
@@ -19,24 +28,15 @@ const EyeIcon = ({ visible }) =>
     </svg>
   );
 
-const validate = ({ correo, contraseña }) => {
-  const e = {};
-  if (!correo.trim()) e.correo = "El correo es requerido.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) e.correo = "Ingresá un correo válido.";
-  if (!contraseña) e.contraseña = "La contraseña es requerida.";
-  else if (contraseña.length < 8) e.contraseña = "Mínimo 8 caracteres.";
-  return e;
-};
-
 const LoginForm = () => {
-  const [form, setForm]           = useState({ correo: "", contraseña: "" });
-  const [errors, setErrors]       = useState({});
+  const [form, setForm] = useState({ correo: "", contrasena: "" });
+  const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
-  const [loading, setLoading]     = useState(false);
-  const [showPass, setShowPass]   = useState(false);
-  const { login }   = useAuth();
-  const navigate    = useNavigate();
-  const { state }   = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
   const handle = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -47,10 +47,14 @@ const LoginForm = () => {
   const submit = async (e) => {
     e.preventDefault();
     const errs = validate(form);
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      return;
+    }
+
     setLoading(true);
     try {
-      await login(form);
+      await login({ correo: form.correo, ["contraseña"]: form.contrasena });
       navigate(state?.from?.pathname ?? "/");
     } catch (err) {
       setServerError(err.response?.data?.message || "Email o contraseña incorrectos.");
@@ -65,7 +69,7 @@ const LoginForm = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
       className="w-full bg-white rounded-2xl p-8"
-      style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.06)" }}
+      style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05)" }}
     >
       <h2
         className="font-semibold text-[#1d1d1f] mb-1"
@@ -77,49 +81,63 @@ const LoginForm = () => {
 
       <form onSubmit={submit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
+          <label htmlFor="correo" className={labelCls}>Correo electrónico</label>
           <input
-            name="correo" type="email" placeholder="Correo electrónico"
-            value={form.correo} onChange={handle} autoComplete="email"
+            id="correo"
+            name="correo"
+            type="email"
+            placeholder="Correo electrónico"
+            value={form.correo}
+            onChange={handle}
+            autoComplete="email"
             className={inputCls}
           />
           {errors.correo && <span className={errCls}>{errors.correo}</span>}
         </div>
 
         <div className="flex flex-col gap-1">
+          <label htmlFor="contrasena" className={labelCls}>Contraseña</label>
           <div className="relative">
             <input
-              name="contraseña" type={showPass ? "text" : "password"} placeholder="Contraseña"
-              value={form.contraseña} onChange={handle} autoComplete="current-password"
+              id="contrasena"
+              name="contrasena"
+              type={showPass ? "text" : "password"}
+              placeholder="Contraseña"
+              value={form.contrasena}
+              onChange={handle}
+              autoComplete="current-password"
               className={`${inputCls} pr-11`}
             />
-            <button
-              type="button" onClick={() => setShowPass(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors"
-            >
+            <button type="button" onClick={() => setShowPass((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors">
               <EyeIcon visible={showPass} />
             </button>
           </div>
-          {errors.contraseña && <span className={errCls}>{errors.contraseña}</span>}
+          {errors.contrasena && <span className={errCls}>{errors.contrasena}</span>}
         </div>
 
-        {serverError && (
-          <p className="text-red-500 text-xs bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">
-            {serverError}
-          </p>
-        )}
+        {serverError && <p className="text-red-500 text-xs bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">{serverError}</p>}
 
         <button
-          type="submit" disabled={loading}
-          className="mt-1 bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-black transition-colors disabled:opacity-50 active:scale-[0.99]"
+          type="submit"
+          disabled={loading}
+          className="mt-1 bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-black transition-colors disabled:opacity-60 active:scale-[0.99] flex items-center justify-center gap-2"
         >
-          {loading ? "Ingresando..." : "Ingresar"}
+          {loading ? (
+            <>
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+              </svg>
+              Ingresando...
+            </>
+          ) : "Ingresar"}
         </button>
       </form>
 
       <div className="mt-6 pt-6 border-t border-black/[0.06]">
         <p className="text-[#6e6e73] text-xs text-center">
           ¿No tenés cuenta?{" "}
-          <Link to="/register" className="text-[#1d1d1f] font-medium hover:underline transition-colors">
+          <Link to="/register" className="text-[#6e6e73] font-medium underline hover:text-[#1d1d1f] transition-colors">
             Registrate
           </Link>
         </p>

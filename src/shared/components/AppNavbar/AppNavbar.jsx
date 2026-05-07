@@ -166,10 +166,10 @@ const AppNavbar = () => {
   }, [inputValue, setSearch]);
 
   // Páginas que arrancan con sección oscura (header negro o full-dark)
-  const DARK_TOP_ROUTES = ["/", "/catalogo", "/soporte", "/login", "/register", "/perfil"];
+  const DARK_TOP_ROUTES = ["/"];
   const isDark = DARK_TOP_ROUTES.includes(location.pathname) && !scrolled;
 
-  const navBg      = isDark ? "py-5" : "py-3 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] shadow-[0_1px_0_0_rgba(0,0,0,0.04)]";
+  const navBg      = isDark ? "py-5" : "py-3 bg-white/95 md:bg-white/85 md:backdrop-blur-xl border-b border-black/[0.06] shadow-[0_1px_0_0_rgba(0,0,0,0.04)]";
   const linkActive = isDark ? "text-white"  : "text-[#1d1d1f]";
   const linkMuted  = isDark ? "text-white/55 hover:text-white" : "text-[#6e6e73] hover:text-[#1d1d1f]";
   const ulActive   = isDark ? "bg-white/50"  : "bg-[#1d1d1f]/40";
@@ -265,10 +265,14 @@ const AppNavbar = () => {
         <form
           onSubmit={handleSubmit}
           role="search"
-          className="flex md:hidden flex-1 mx-3 items-center gap-2 h-9 pl-3 rounded-full border transition-colors bg-black/[0.04] border-black/10 focus-within:border-black/20"
+          className={`flex md:hidden flex-1 mx-3 items-center gap-2 h-9 pl-3 rounded-full transition-colors ${
+            isDark
+              ? "border border-white/15 bg-white/[0.05] hover:border-white/25 focus-within:border-white/35"
+              : "border border-black/10 bg-black/[0.04] hover:border-black/18 focus-within:border-black/25"
+          }`}
         >
           <button type="submit" aria-label="Buscar" className="shrink-0 flex items-center">
-            <SearchSVG fill="rgba(0,0,0,0.35)" />
+            <SearchSVG fill={isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.35)"} />
           </button>
           <input
             ref={mobileRef}
@@ -277,7 +281,9 @@ const AppNavbar = () => {
             placeholder="Buscar..."
             value={inputValue}
             onChange={(e) => handleChange(e.target.value)}
-            className="flex-1 h-full outline-none bg-transparent text-sm pr-3 text-[#1d1d1f] placeholder-[#6e6e73]/55"
+            className={`flex-1 h-full outline-none bg-transparent text-sm pr-3 ${
+              isDark ? "text-white placeholder-white/30" : "text-[#1d1d1f] placeholder-[#6e6e73]/55"
+            }`}
           />
         </form>
       </nav>
@@ -291,7 +297,8 @@ const AppNavbar = () => {
             : "translate-y-full opacity-0 pointer-events-none"
         }`}
       >
-        <div className="mx-3 mb-3 rounded-2xl bg-[#111111]/92 backdrop-blur-2xl border border-white/[0.08] shadow-[0_-4px_32px_rgba(0,0,0,0.4)]">
+        <div className="mx-3 mb-3 relative rounded-2xl bg-white md:bg-white/88 md:backdrop-blur-2xl border border-black/[0.07] shadow-[0_-2px_20px_rgba(0,0,0,0.07),0_2px_8px_rgba(0,0,0,0.04)]">
+          <div className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-black/[0.06] to-transparent" aria-hidden="true" />
           <div className="flex items-center justify-around px-1 py-2.5">
             {WA_LINKS.map((l) => {
               const isActive = location.pathname === l.path;
@@ -301,12 +308,12 @@ const AppNavbar = () => {
                   to={l.path}
                   aria-current={isActive ? "page" : undefined}
                   className={`flex flex-col items-center gap-1 px-4 py-1 rounded-xl transition-all duration-200 ${
-                    isActive ? "text-white" : "text-white/50 hover:text-white/80"
+                    isActive ? "text-[#1d1d1f]" : "text-[#6e6e73] hover:text-[#1d1d1f]"
                   }`}
                 >
                   {NAV_ICONS[l.path]}
                   <span className="text-[9px] tracking-wide font-medium">{l.name}</span>
-                  {isActive && <span className="w-1 h-1 rounded-full bg-white/60" aria-hidden="true" />}
+                  {isActive && <span className="w-1 h-1 rounded-full bg-[#1d1d1f]/40" aria-hidden="true" />}
                 </Link>
               );
             })}
@@ -319,21 +326,21 @@ const AppNavbar = () => {
                   className="flex flex-col items-center gap-1 transition-colors"
                 >
                   <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold overflow-hidden ${
-                    location.pathname === "/perfil" ? "bg-white/30 text-white" : "bg-white/10 text-white/50"
+                    location.pathname === "/perfil" ? "bg-[#1d1d1f] text-white" : "bg-black/[0.08] text-[#6e6e73]"
                   }`}>
                     {user?.img
                       ? <img src={user.img} alt="" className="w-full h-full object-cover" />
                       : (user?.nombreUsuario?.[0]?.toUpperCase() ?? "U")}
                   </div>
                   <span className={`text-[9px] tracking-wide font-medium ${
-                    location.pathname === "/perfil" ? "text-white" : "text-white/50"
+                    location.pathname === "/perfil" ? "text-[#1d1d1f]" : "text-[#6e6e73]"
                   }`}>Perfil</span>
                   {location.pathname === "/perfil" && (
-                    <span className="w-1 h-1 rounded-full bg-white/60" aria-hidden="true" />
+                    <span className="w-1 h-1 rounded-full bg-[#1d1d1f]/40" aria-hidden="true" />
                   )}
                 </Link>
               ) : (
-                <Link to="/login" className="flex flex-col items-center gap-1 text-white/50 hover:text-white/80 transition-colors">
+                <Link to="/login" className="flex flex-col items-center gap-1 text-[#6e6e73] hover:text-[#1d1d1f] transition-colors">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
@@ -348,7 +355,7 @@ const AppNavbar = () => {
       {/* ── Sub-barra categorías (catálogo, desktop) ─────────────── */}
       {isCatalog && (
         <div
-          className={`fixed z-40 inset-x-0 hidden md:flex justify-center gap-1 px-8 py-2 transition-all duration-500 bg-white/80 backdrop-blur-xl border-b border-black/[0.04] ${
+          className={`fixed z-40 inset-x-0 hidden md:flex justify-center gap-1 px-8 py-2 transition-all duration-500 bg-white/80 md:backdrop-blur-xl border-b border-black/[0.04] ${
             scrolled ? "top-[52px]" : "top-[68px]"
           }`}
         >

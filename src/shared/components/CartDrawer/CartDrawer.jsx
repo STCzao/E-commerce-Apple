@@ -48,7 +48,7 @@ const CartDrawer = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] bg-black/40 md:bg-black/30 md:backdrop-blur-sm"
             onClick={close}
             aria-hidden="true"
           />
