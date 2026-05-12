@@ -14,7 +14,7 @@ const Cards = ({ productos, title, id }) => {
       {title && (
         <div
           className="absolute -top-20 inset-x-0 h-48 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 60% 100% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 100%)" }}
+          style={{ background: "radial-gradient(ellipse 60% 100% at 50% 0%, rgba(0,0,0,0.02) 0%, transparent 100%)" }}
           aria-hidden="true"
         />
       )}
@@ -22,15 +22,15 @@ const Cards = ({ productos, title, id }) => {
       {title && (
         <div className="relative flex items-baseline gap-3 mb-8 px-1">
           <h2
-            className="font-semibold text-white"
+            className="font-semibold text-[#1d1d1f]"
             style={{ fontSize: "clamp(1.4rem, 2.5vw, 1.8rem)", letterSpacing: "-0.02em" }}
           >
             {title}
           </h2>
-          <span className="text-sm text-white/25">{productos.length} productos</span>
+          <span className="text-sm text-[#6e6e73]">{productos.length} productos</span>
           <div
             className="flex-1 h-px"
-            style={{ background: "linear-gradient(to right, rgba(255,255,255,0.08), transparent)" }}
+            style={{ background: "linear-gradient(to right, rgba(0,0,0,0.07), transparent)" }}
             aria-hidden="true"
           />
         </div>

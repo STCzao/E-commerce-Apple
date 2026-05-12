@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const inputCls = "w-full bg-[#f5f5f7] border border-black/[0.08] rounded-xl px-4 py-3 text-[#1d1d1f] placeholder-[#6e6e73]/60 text-sm outline-none focus:border-black/20 focus:bg-white transition-colors";
-const errCls   = "text-red-500 text-xs px-1";
+const errCls = "text-red-500 text-xs px-1";
+const labelCls = "text-xs font-medium text-[#6e6e73] px-1";
 
-const NAME_RE    = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+const NAME_RE = /^[a-zA-Z\s]+$/;
 const SPECIAL_RE = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
 
 const computeAge = (dateStr) => {
@@ -14,14 +15,13 @@ const computeAge = (dateStr) => {
   const birth = new Date(dateStr);
   const today = new Date();
   let age = today.getFullYear() - birth.getFullYear();
-  const hasBirthday =
-    today.getMonth() > birth.getMonth() ||
-    (today.getMonth() === birth.getMonth() && today.getDate() >= birth.getDate());
+  const hasBirthday = today.getMonth() > birth.getMonth() || (today.getMonth() === birth.getMonth() && today.getDate() >= birth.getDate());
   return hasBirthday ? age : age - 1;
 };
 
 const validate = (form) => {
   const e = {};
+
   if (!form.nombreUsuario.trim()) e.nombreUsuario = "El nombre es obligatorio.";
   else if (form.nombreUsuario.trim().length < 3) e.nombreUsuario = "Mínimo 3 caracteres.";
   else if (form.nombreUsuario.trim().length > 40) e.nombreUsuario = "Máximo 40 caracteres.";
@@ -34,15 +34,15 @@ const validate = (form) => {
   else if (new Date(form.fechaNacimiento) >= new Date()) e.fechaNacimiento = "Debe ser una fecha en el pasado.";
   else if (computeAge(form.fechaNacimiento) < 18) e.fechaNacimiento = "Debés tener al menos 18 años.";
 
-  if (!form.contraseña) e.contraseña = "La contraseña es requerida.";
-  else if (form.contraseña.length < 8) e.contraseña = "Mínimo 8 caracteres.";
-  else if (form.contraseña.length > 64) e.contraseña = "Máximo 64 caracteres.";
-  else if (!/[A-Z]/.test(form.contraseña)) e.contraseña = "Debe incluir al menos una mayúscula.";
-  else if (!/\d/.test(form.contraseña)) e.contraseña = "Debe incluir al menos un número.";
-  else if (!SPECIAL_RE.test(form.contraseña)) e.contraseña = "Debe incluir al menos un carácter especial.";
+  if (!form.contrasena) e.contrasena = "La contraseña es requerida.";
+  else if (form.contrasena.length < 8) e.contrasena = "Mínimo 8 caracteres.";
+  else if (form.contrasena.length > 64) e.contrasena = "Máximo 64 caracteres.";
+  else if (!/[A-Z]/.test(form.contrasena)) e.contrasena = "Debe incluir al menos una mayúscula.";
+  else if (!/\d/.test(form.contrasena)) e.contrasena = "Debe incluir al menos un número.";
+  else if (!SPECIAL_RE.test(form.contrasena)) e.contrasena = "Debe incluir al menos un carácter especial.";
 
-  if (!form.confirmarContraseña) e.confirmarContraseña = "Confirmá tu contraseña.";
-  else if (form.confirmarContraseña !== form.contraseña) e.confirmarContraseña = "Las contraseñas no coinciden.";
+  if (!form.confirmarContrasena) e.confirmarContrasena = "Confirmá tu contraseña.";
+  else if (form.confirmarContrasena !== form.contrasena) e.confirmarContrasena = "Las contraseñas no coinciden.";
 
   return e;
 };
@@ -59,19 +59,23 @@ const EyeIcon = ({ visible }) =>
     </svg>
   );
 
-const maxDate    = new Date();
+const maxDate = new Date();
 maxDate.setFullYear(maxDate.getFullYear() - 18);
 const maxDateStr = maxDate.toISOString().split("T")[0];
 
 const RegisterForm = () => {
   const [form, setForm] = useState({
-    nombreUsuario: "", correo: "", fechaNacimiento: "", contraseña: "", confirmarContraseña: "",
+    nombreUsuario: "",
+    correo: "",
+    fechaNacimiento: "",
+    contrasena: "",
+    confirmarContrasena: "",
   });
-  const [errors, setErrors]           = useState({});
+  const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
-  const [success, setSuccess]         = useState(false);
-  const [loading, setLoading]         = useState(false);
-  const [showPass, setShowPass]       = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const { register } = useAuth();
 
@@ -84,10 +88,20 @@ const RegisterForm = () => {
   const submit = async (e) => {
     e.preventDefault();
     const errs = validate(form);
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      return;
+    }
+
     setLoading(true);
     try {
-      await register(form);
+      await register({
+        nombreUsuario: form.nombreUsuario,
+        correo: form.correo,
+        fechaNacimiento: form.fechaNacimiento,
+        ["contraseña"]: form.contrasena,
+        ["confirmarContraseña"]: form.confirmarContrasena,
+      });
       setSuccess(true);
     } catch (err) {
       setServerError(err.response?.data?.message || "No se pudo crear la cuenta. Intentá de nuevo.");
@@ -103,12 +117,9 @@ const RegisterForm = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
         className="w-full bg-white rounded-2xl p-8 text-center"
-        style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.06)" }}
+        style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05)" }}
       >
-        <div
-          className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
-          style={{ background: "#f5f5f7", border: "1px solid rgba(0,0,0,0.07)" }}
-        >
+        <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.07)" }}>
           <svg className="w-7 h-7 text-[#1d1d1f]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
           </svg>
@@ -134,84 +145,80 @@ const RegisterForm = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
       className="w-full bg-white rounded-2xl p-8"
-      style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.06)" }}
+      style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.05)" }}
     >
-      <h2
-        className="font-semibold text-[#1d1d1f] mb-1"
-        style={{ fontSize: "1.5rem", letterSpacing: "-0.02em" }}
-      >
+      <h2 className="font-semibold text-[#1d1d1f] mb-1" style={{ fontSize: "1.5rem", letterSpacing: "-0.02em" }}>
         Crear cuenta
       </h2>
-      <p className="text-[#6e6e73] text-sm mb-7">Unite a la familia Apple</p>
+      <p className="text-[#6e6e73] text-sm mb-7">Únite a la familia Apple</p>
 
       <form onSubmit={submit} className="flex flex-col gap-3.5">
         <div className="flex flex-col gap-1">
-          <input name="nombreUsuario" type="text" placeholder="Nombre completo"
-            value={form.nombreUsuario} onChange={handle} autoComplete="name"
-            className={inputCls} />
+          <label htmlFor="nombreUsuario" className={labelCls}>Nombre completo</label>
+          <input id="nombreUsuario" name="nombreUsuario" type="text" placeholder="Nombre completo" value={form.nombreUsuario} onChange={handle} autoComplete="name" className={inputCls} />
           {errors.nombreUsuario && <span className={errCls}>{errors.nombreUsuario}</span>}
         </div>
 
         <div className="flex flex-col gap-1">
-          <input name="correo" type="email" placeholder="Correo electrónico"
-            value={form.correo} onChange={handle} autoComplete="email"
-            className={inputCls} />
+          <label htmlFor="correo" className={labelCls}>Correo electrónico</label>
+          <input id="correo" name="correo" type="email" placeholder="Correo electrónico" value={form.correo} onChange={handle} autoComplete="email" className={inputCls} />
           {errors.correo && <span className={errCls}>{errors.correo}</span>}
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-[#6e6e73] text-xs px-1 mb-0.5">Fecha de nacimiento</label>
-          <input name="fechaNacimiento" type="date" max={maxDateStr}
-            value={form.fechaNacimiento} onChange={handle}
-            className={inputCls} />
+          <label htmlFor="fechaNacimiento" className={labelCls}>Fecha de nacimiento</label>
+          <input id="fechaNacimiento" name="fechaNacimiento" type="date" max={maxDateStr} value={form.fechaNacimiento} onChange={handle} className={inputCls} />
           {errors.fechaNacimiento && <span className={errCls}>{errors.fechaNacimiento}</span>}
         </div>
 
         <div className="flex flex-col gap-1">
+          <label htmlFor="contrasena" className={labelCls}>Contraseña</label>
           <div className="relative">
-            <input name="contraseña" type={showPass ? "text" : "password"} placeholder="Contraseña"
-              value={form.contraseña} onChange={handle} autoComplete="new-password"
-              className={`${inputCls} pr-11`} />
-            <button type="button" onClick={() => setShowPass(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors">
+            <input id="contrasena" name="contrasena" type={showPass ? "text" : "password"} placeholder="Contraseña" value={form.contrasena} onChange={handle} autoComplete="new-password" className={`${inputCls} pr-11`} />
+            <button type="button" onClick={() => setShowPass((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors">
               <EyeIcon visible={showPass} />
             </button>
           </div>
-          {errors.contraseña
-            ? <span className={errCls}>{errors.contraseña}</span>
-            : <span className="text-[#6e6e73]/50 text-[11px] px-1">Mínimo 8 caracteres, mayúscula, número y símbolo</span>
-          }
+          {errors.contrasena && <span className={errCls}>{errors.contrasena}</span>}
+          <span className="text-[#6e6e73]/50 text-[11px] px-1">
+            Mínimo 8 caracteres, mayúscula, número y símbolo
+          </span>
         </div>
 
         <div className="flex flex-col gap-1">
+          <label htmlFor="confirmarContrasena" className={labelCls}>Confirmar contraseña</label>
           <div className="relative">
-            <input name="confirmarContraseña" type={showConfirm ? "text" : "password"} placeholder="Confirmar contraseña"
-              value={form.confirmarContraseña} onChange={handle} autoComplete="new-password"
-              className={`${inputCls} pr-11`} />
-            <button type="button" onClick={() => setShowConfirm(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors">
+            <input id="confirmarContrasena" name="confirmarContrasena" type={showConfirm ? "text" : "password"} placeholder="Confirmar contraseña" value={form.confirmarContrasena} onChange={handle} autoComplete="new-password" className={`${inputCls} pr-11`} />
+            <button type="button" onClick={() => setShowConfirm((v) => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors">
               <EyeIcon visible={showConfirm} />
             </button>
           </div>
-          {errors.confirmarContraseña && <span className={errCls}>{errors.confirmarContraseña}</span>}
+          {errors.confirmarContrasena && <span className={errCls}>{errors.confirmarContrasena}</span>}
         </div>
 
-        {serverError && (
-          <p className="text-red-500 text-xs bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">
-            {serverError}
-          </p>
-        )}
+        {serverError && <p className="text-red-500 text-xs bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">{serverError}</p>}
 
-        <button type="submit" disabled={loading}
-          className="mt-1 bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-black transition-colors disabled:opacity-50 active:scale-[0.99]">
-          {loading ? "Creando cuenta..." : "Registrarse"}
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-1 bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-black transition-colors disabled:opacity-60 active:scale-[0.99] flex items-center justify-center gap-2"
+        >
+          {loading ? (
+            <>
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+              </svg>
+              Creando cuenta...
+            </>
+          ) : "Registrarse"}
         </button>
       </form>
 
       <div className="mt-6 pt-6 border-t border-black/[0.06]">
         <p className="text-[#6e6e73] text-xs text-center">
           ¿Ya tenés cuenta?{" "}
-          <Link to="/login" className="text-[#1d1d1f] font-medium hover:underline">
+          <Link to="/login" className="text-[#6e6e73] font-medium underline hover:text-[#1d1d1f] transition-colors">
             Iniciá sesión
           </Link>
         </p>

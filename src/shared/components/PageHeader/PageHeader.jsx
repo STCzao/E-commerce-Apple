@@ -8,13 +8,8 @@ const PageHeader = ({
   compact = false,
   children,
 }) => (
-  <header className="surface-metal relative overflow-hidden">
-
-    {/* Arista de luz superior */}
-    <div className="edge-light absolute top-0 inset-x-0 h-px" aria-hidden="true" />
-
-    {/* Fade a la sección siguiente (opcional) */}
-    {fadeColor && fadeColor !== "#000" && (
+  <header className="relative overflow-hidden" style={{ background: "#f5f5f7" }}>
+    {fadeColor && fadeColor !== "#f5f5f7" && (
       <div
         className="absolute bottom-0 inset-x-0 h-32 pointer-events-none"
         style={{ background: `linear-gradient(to top, ${fadeColor}, transparent)` }}
@@ -35,7 +30,7 @@ const PageHeader = ({
       )}
 
       <h1
-        className="font-semibold text-white"
+        className="font-semibold text-[#1d1d1f]"
         style={{
           fontSize: "clamp(2.2rem, 5.5vw, 3.8rem)",
           letterSpacing: "-0.03em",
@@ -46,7 +41,7 @@ const PageHeader = ({
       </h1>
 
       {subtitle && (
-        <p className="text-lg mt-5 max-w-xl mx-auto leading-relaxed" style={{ color: "rgba(255,255,255,0.38)" }}>
+        <p className="text-lg mt-5 max-w-xl mx-auto leading-relaxed" style={{ color: "rgba(0,0,0,0.45)" }}>
           {subtitle}
         </p>
       )}
@@ -54,8 +49,7 @@ const PageHeader = ({
       {children && <div className="mt-8">{children}</div>}
     </motion.div>
 
-    {/* Regla inferior metálica */}
-    <div className="rule-metal mx-auto" style={{ maxWidth: "80%", opacity: 0.5 }} aria-hidden="true" />
+    <div className="rule-metal-light mx-auto" style={{ maxWidth: "80%", opacity: 0.5 }} aria-hidden="true" />
   </header>
 );
 

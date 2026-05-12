@@ -1,10 +1,5 @@
-import AuthLayout from "../shared/components/AuthLayout/AuthLayout";
 import LoginForm from "../features/auth/components/LoginForm/LoginForm";
 
-const LoginPage = () => (
-  <AuthLayout>
-    <LoginForm />
-  </AuthLayout>
-);
+const LoginPage = () => <LoginForm />;
 
 export default LoginPage;

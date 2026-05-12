@@ -47,12 +47,6 @@ const Footer = () => (
             >
               Soporte
             </Link>
-            <Link
-              to="/compra"
-              className="text-sm text-white/60 hover:text-white transition-colors tracking-wide"
-            >
-              Compra
-            </Link>
           </div>
           <span className="text-xs tracking-[0.2em] uppercase text-white/40 mt-2">
             Argentina · 2025

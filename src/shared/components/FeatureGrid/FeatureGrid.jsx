@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 const features = [
   {
@@ -15,7 +16,7 @@ const features = [
   {
     num: "03",
     title: "Envíos a todo el país",
-    desc: "Despacho en 24–48 h hábiles con seguimiento en tiempo real a cualquier punto de Argentina.",
+    desc: "Despacho en 24-48 h hábiles con seguimiento en tiempo real a cualquier punto de Argentina.",
   },
   {
     num: "04",
@@ -40,49 +41,46 @@ const ArrowIcon = () => (
   </svg>
 );
 
-const FeatureRow = ({ f, i }) => {
+const FeatureRow = ({ f, i, reduced, isMobile }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <motion.li
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduced ? false : { opacity: 0, y: isMobile ? 6 : 10 }}
+      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10px" }}
-      transition={{ duration: 0.4, delay: i * 0.06 }}
+      transition={{ duration: 0.32, delay: isMobile ? 0 : i * 0.06 }}
     >
       <button
         className="group w-full flex items-start gap-5 py-5 text-left transition-colors duration-200"
-        style={{ borderBottom: "1px solid #1c1c1e" }}
-        onClick={() => setOpen(v => !v)}
+        style={{ borderBottom: "1px solid rgba(0,0,0,0.07)" }}
+        onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
-        {/* Número */}
         <span
           className="text-xs font-mono pt-0.5 w-7 shrink-0 transition-colors duration-200"
-          style={{ color: open ? "#aeaeb2" : "#3a3a3c" }}
+          style={{ color: open ? "#6e6e73" : "#c7c7cc" }}
         >
           {f.num}
         </span>
 
-        {/* Título + descripción (mobile: expandible; desktop: siempre visible) */}
         <div className="flex-1 min-w-0">
           <span
             className="block text-[15px] font-medium transition-colors duration-200"
-            style={{ color: open ? "#ffffff" : "rgba(255,255,255,0.65)", letterSpacing: "-0.01em" }}
+            style={{ color: open ? "#1d1d1f" : "rgba(0,0,0,0.45)", letterSpacing: "-0.01em" }}
           >
             {f.title}
           </span>
 
-          {/* Descripción mobile: expandible */}
           <AnimatePresence initial={false}>
             {open && (
               <motion.p
-                initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                animate={{ opacity: 1, height: "auto", marginTop: 8 }}
-                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                initial={reduced ? false : { opacity: 0, height: 0, marginTop: 0 }}
+                animate={reduced ? undefined : { opacity: 1, height: "auto", marginTop: 8 }}
+                exit={reduced ? undefined : { opacity: 0, height: 0, marginTop: 0 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
                 className="text-sm leading-relaxed overflow-hidden md:hidden"
-                style={{ color: "rgba(255,255,255,0.38)" }}
+                style={{ color: "rgba(0,0,0,0.4)" }}
               >
                 {f.desc}
               </motion.p>
@@ -90,18 +88,16 @@ const FeatureRow = ({ f, i }) => {
           </AnimatePresence>
         </div>
 
-        {/* Descripción desktop: siempre visible, reveal en hover */}
         <p
           className="hidden md:block text-sm leading-relaxed max-w-xs transition-colors duration-200"
-          style={{ color: "rgba(255,255,255,0.3)" }}
+          style={{ color: "rgba(0,0,0,0.35)" }}
         >
           {f.desc}
         </p>
 
-        {/* Flecha */}
         <span
           className="transition-colors duration-200 mt-0.5"
-          style={{ color: open ? "#aeaeb2" : "rgba(255,255,255,0.18)" }}
+          style={{ color: open ? "#6e6e73" : "rgba(0,0,0,0.18)" }}
         >
           <ArrowIcon />
         </span>
@@ -110,45 +106,55 @@ const FeatureRow = ({ f, i }) => {
   );
 };
 
-const FeatureGrid = () => (
-  <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-28" style={{ borderTop: "1px solid #1c1c1e" }}>
-    <div className="max-w-6xl mx-auto">
+const FeatureGrid = () => {
+  const reduced = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  );
 
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.45 }}
-        className="mb-14 flex flex-col md:flex-row md:items-end gap-4 md:gap-16"
-      >
-        <div className="shrink-0">
-          <p className="text-xs font-medium tracking-[0.28em] uppercase mb-4" style={{ color: "#6e6e73" }}>
-            Por qué elegirnos
-          </p>
-          <h2
-            className="font-semibold text-white"
-            style={{ fontSize: "clamp(1.8rem, 4vw, 2.6rem)", letterSpacing: "-0.03em", lineHeight: 1.1 }}
-          >
-            Todo lo que
-            <br />
-            <span style={{ color: "#aeaeb2" }}>necesitás.</span>
-          </h2>
-        </div>
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    const mq = window.matchMedia("(max-width: 767px)");
+    const onChange = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
-        {/* Regla de titanio horizontal */}
-        <div className="flex-1 rule-metal hidden md:block" />
-      </motion.div>
+  return (
+    <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-28" style={{ background: "#f5f5f7", borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={reduced ? false : { opacity: 0, y: isMobile ? 6 : 12 }}
+          whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.32 }}
+          className="mb-14 flex flex-col md:flex-row md:items-end gap-4 md:gap-16"
+        >
+          <div className="shrink-0">
+            <p className="text-xs font-medium tracking-[0.28em] uppercase mb-4" style={{ color: "#6e6e73" }}>
+              Por qué elegirnos
+            </p>
+            <h2
+              className="font-semibold text-[#1d1d1f]"
+              style={{ fontSize: "clamp(1.8rem, 4vw, 2.6rem)", letterSpacing: "-0.03em", lineHeight: 1.1 }}
+            >
+              Todo lo que
+              <br />
+              <span style={{ color: "#6e6e73" }}>necesitás.</span>
+            </h2>
+          </div>
 
-      {/* Lista editorial */}
-      <ul style={{ borderTop: "1px solid #1c1c1e" }}>
-        {features.map((f, i) => (
-          <FeatureRow key={f.num} f={f} i={i} />
-        ))}
-      </ul>
+          <div className="flex-1 rule-metal-light hidden md:block" />
+        </motion.div>
 
-    </div>
-  </section>
-);
+        <ul style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+          {features.map((f, i) => (
+            <FeatureRow key={f.num} f={f} i={i} reduced={reduced} isMobile={isMobile} />
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
 export default FeatureGrid;

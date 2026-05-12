@@ -120,3 +120,22 @@ body {
   -webkit-text-fill-color: white !important;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+/* Superficie clara — base de las secciones de contenido */
+.surface-light {
+  background: #f5f5f7;
+}
+
+/* Dot grid para fondos claros (más visible) */
+/* Ya existe .dot-grid — confirmar que aplica bien sobre #f5f5f7 */
+
+/* Regla de titanio — versión clara (para secciones blancas) */
+.rule-metal-light {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c7c7cc 20%, #8e8e93 50%, #c7c7cc 80%, transparent);
+}
+
+/* Gradiente de transición Hero (oscuro) → contenido (claro) */
+.fade-dark-to-light {
+  background: linear-gradient(to bottom, #0a0a0a 0%, #f5f5f7 100%);
+}

@@ -1,7 +1,7 @@
 .mq-root {
   position: relative;
   overflow: hidden;
-  background: #0a0a0a;
+  background: #f5f5f7;
   padding: 14px 0;
   user-select: none;
 }
@@ -12,7 +12,7 @@
   position: absolute;
   inset-x: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, #3a3a3c 30%, #3a3a3c 70%, transparent);
+  background: linear-gradient(to right, transparent, #c7c7cc 30%, #c7c7cc 70%, transparent);
 }
 .mq-root::before { top: 0; }
 .mq-root::after  { bottom: 0; }
@@ -34,13 +34,13 @@
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.22);
+  color: rgba(0,0,0,0.25);
   white-space: nowrap;
 }
 
 /* Separadores como guión de titanio */
 .mq-sep {
-  color: #3a3a3c;
+  color: #c7c7cc;
   font-weight: 300;
   font-size: 10px;
 }
@@ -54,8 +54,8 @@
   pointer-events: none;
   z-index: 2;
 }
-.mq-fade-l { left:  0; background: linear-gradient(to right, #0a0a0a, transparent); }
-.mq-fade-r { right: 0; background: linear-gradient(to left,  #0a0a0a, transparent); }
+.mq-fade-l { left:  0; background: linear-gradient(to right, #f5f5f7, transparent); }
+.mq-fade-r { right: 0; background: linear-gradient(to left,  #f5f5f7, transparent); }
 
 @keyframes mq-scroll {
   from { transform: translateX(0); }

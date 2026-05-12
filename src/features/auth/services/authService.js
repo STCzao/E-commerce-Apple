@@ -1,4 +1,7 @@
+import axios from "axios";
 import api from "../../../services/api";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 export const authService = {
   login: (credentials) =>
@@ -8,17 +11,17 @@ export const authService = {
     api.post("/auth/registro", userData),
 
   confirmarEmail: (token) =>
-    api.get(`/auth/confirmar/${token}`),
+    api.post(`/auth/confirmar/${token}`),
 
-  resetPassword: (token, contraseña) =>
-    api.post(`/auth/reset-password/${token}`, { contraseña }),
+  resetPassword: (token, contrasena) =>
+    api.post(`/auth/reset-password/${token}`, { ["contrase\u00f1a"]: contrasena }),
 
   forgotPassword: (correo) =>
     api.post("/auth/forgot-password", { correo }),
 
-  // El refreshToken viaja automáticamente via cookie (withCredentials: true)
+  // El refreshToken viaja automaticamente via cookie (withCredentials: true)
   refresh: () =>
-    api.post("/auth/refresh"),
+    axios.post(`${BASE_URL}/auth/refresh`, {}, { withCredentials: true }),
 
   logout: () =>
     api.post("/auth/logout"),
