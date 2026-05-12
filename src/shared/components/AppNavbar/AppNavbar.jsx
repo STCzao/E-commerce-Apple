@@ -5,6 +5,7 @@ import useCatalogStore from "../../../store/catalogStore";
 import useConfirmStore from "../../../store/confirmStore";
 import useToastStore from "../../../store/toastStore";
 import useAuth from "../../../features/auth/hooks/useAuth";
+import useFavoritesStore from "../../../store/favoritesStore";
 const Logo = import.meta.env.VITE_ASSET_LOGO;
 
 const WA_LINKS = [
@@ -55,6 +56,7 @@ const UserMenu = ({ user, isDark }) => {
   const confirm    = useConfirmStore((s) => s.confirm);
   const addToast   = useToastStore((s) => s.addToast);
   const { logout } = useAuth();
+  const favCount   = useFavoritesStore((s) => s.items.length);
 
   useEffect(() => {
     const handler = (e) => {
@@ -104,7 +106,20 @@ const UserMenu = ({ user, isDark }) => {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-44 bg-white rounded-2xl border border-black/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.12)] py-1.5 z-10">
+        <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl border border-black/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.12)] py-1.5 z-10">
+          {user?.rol === "ADMIN_ROLE" && (
+            <Link
+              to="/admin"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 px-4 py-2 text-sm text-[#1d1d1f] hover:bg-black/[0.04] transition-colors"
+            >
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-4 h-4 text-[#6e6e73]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 3.5l1.2 2.43 2.68.39-1.94 1.89.46 2.67L10 9.6 7.6 10.88l.46-2.67-1.94-1.89 2.68-.39L10 3.5z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 12.5v4M8 16.5h4" />
+              </svg>
+              Panel admin
+            </Link>
+          )}
           <Link
             to="/perfil"
             onClick={() => setOpen(false)}
@@ -114,6 +129,23 @@ const UserMenu = ({ user, isDark }) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
             </svg>
             Mi perfil
+          </Link>
+          <Link
+            to="/perfil"
+            onClick={() => setOpen(false)}
+            className="flex items-center justify-between px-4 py-2 text-sm text-[#1d1d1f] hover:bg-black/[0.04] transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-4 h-4 text-[#6e6e73]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+              </svg>
+              Favoritos
+            </div>
+            {favCount > 0 && (
+              <span className="text-[10px] font-semibold bg-[#f5f5f7] text-[#6e6e73] px-1.5 py-0.5 rounded-full min-w-[18px] text-center">
+                {favCount}
+              </span>
+            )}
           </Link>
           <div className="h-px bg-black/[0.05] my-1" />
           <button

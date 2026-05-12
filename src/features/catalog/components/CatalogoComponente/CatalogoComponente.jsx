@@ -5,13 +5,6 @@ import useCatalogStore from "../../../../store/catalogStore";
 import useCatalog from "../../hooks/useCatalog";
 import PageHeader from "../../../../shared/components/PageHeader/PageHeader";
 
-const CATS = [
-  { name: "iPhones", id: "iPhone" },
-  { name: "iPads", id: "iPad" },
-  { name: "Macs", id: "Mac" },
-  { name: "Watch", id: "Watch" },
-];
-
 const SkeletonCard = () => (
   <div className="rounded-2xl overflow-hidden animate-pulse" style={{ background: "rgba(0,0,0,0.05)" }}>
     <div className="aspect-square" style={{ background: "rgba(0,0,0,0.04)" }} />
@@ -93,13 +86,37 @@ const EmptyCatalog = () => (
 
 const CatalogoComponente = () => {
   const search = useCatalogStore((s) => s.search);
-  const { productos, loading, error } = useCatalog();
+  const categoriaActiva = useCatalogStore((s) => s.categoriaActiva);
+  const setCategoriaActiva = useCatalogStore((s) => s.setCategoriaActiva);
+  const { productos, categorias, loading, error } = useCatalog();
 
   const filtrados = useMemo(() => {
-    if (!search) return productos;
-    const q = search.toLowerCase();
-    return productos.filter((p) => (p.nombreProducto ?? p.name ?? "").toLowerCase().includes(q));
-  }, [search, productos]);
+    let lista = productos;
+
+    if (categoriaActiva) {
+      lista = lista.filter((p) => p.categoria?._id === categoriaActiva);
+    }
+
+    if (search) {
+      const q = search.toLowerCase();
+      lista = lista.filter((p) =>
+        (p.nombreProducto ?? p.name ?? "").toLowerCase().includes(q)
+      );
+    }
+
+    return lista;
+  }, [productos, categorias, categoriaActiva, search]);
+
+  const agrupado = useMemo(() => {
+    if (categoriaActiva || search) return null;
+
+    return categorias
+      .map((cat) => ({
+        ...cat,
+        productos: productos.filter((p) => p.categoria?._id === cat._id),
+      }))
+      .filter((g) => g.productos.length > 0);
+  }, [productos, categorias, categoriaActiva, search]);
 
   return (
     <div className="min-h-screen" style={{ background: "#f5f5f7" }}>
@@ -109,18 +126,31 @@ const CatalogoComponente = () => {
         subtitle="Distribuidores autorizados por Apple en Argentina. Garantía oficial y soporte certificado."
         fadeColor="#f5f5f7"
       >
-        {!search && (
+        {categorias.length > 0 && !search && (
           <nav aria-label="Categorías" className="flex flex-wrap justify-center gap-2">
-            {CATS.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => document.getElementById(cat.id)?.scrollIntoView({ behavior: "smooth" })}
-                className="text-xs font-medium text-[#6e6e73] px-4 py-1.5 rounded-full hover:text-[#1d1d1f] transition-all"
-                style={{ border: "1px solid rgba(0,0,0,0.08)" }}
-              >
-                {cat.name}
-              </button>
-            ))}
+            {categorias.map((cat) => {
+              const activa = categoriaActiva === cat._id;
+
+              return (
+                <button
+                  key={cat._id}
+                  onClick={() => {
+                    setCategoriaActiva(cat._id);
+                    if (!activa) {
+                      document.getElementById(cat._id)?.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  style={{ border: "1px solid rgba(0,0,0,0.08)" }}
+                  className={`text-xs font-medium px-4 py-1.5 rounded-full transition-all ${
+                    activa
+                      ? "bg-[#1d1d1f] text-white border-transparent"
+                      : "text-[#6e6e73] hover:text-[#1d1d1f]"
+                  }`}
+                >
+                  {cat.nombreCategoria}
+                </button>
+              );
+            })}
           </nav>
         )}
       </PageHeader>
@@ -155,15 +185,28 @@ const CatalogoComponente = () => {
         </div>
       )}
 
-      {!loading && !error && filtrados.length === 0 && !search && (
+      {!loading && !error && productos.length === 0 && !search && (
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 pb-28">
           <EmptyCatalog />
         </div>
       )}
 
-      {!loading && !error && filtrados.length > 0 && (
+      {!loading && !error && (search || categoriaActiva) && filtrados.length > 0 && (
         <div className="pb-28">
-          {search ? <Cards productos={filtrados} /> : <Cards productos={filtrados} title="Productos" id="productos" />}
+          <Cards productos={filtrados} />
+        </div>
+      )}
+
+      {!loading && !error && !search && !categoriaActiva && agrupado?.length > 0 && (
+        <div className="pb-28 flex flex-col gap-12">
+          {agrupado.map((grupo) => (
+            <Cards
+              key={grupo._id}
+              id={grupo._id}
+              title={grupo.nombreCategoria}
+              productos={grupo.productos}
+            />
+          ))}
         </div>
       )}
     </div>

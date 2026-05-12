@@ -3,8 +3,9 @@ import { useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { authService } from "../features/auth/services/authService";
 
-const inputCls = "w-full bg-white/[0.07] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-white/30 text-sm outline-none focus:border-white/40 transition-colors pr-11";
-const errCls = "text-red-400/80 text-xs px-1";
+const inputCls = "w-full bg-[#f5f5f7] border border-black/[0.08] rounded-xl px-4 py-3 text-[#1d1d1f] placeholder-[#6e6e73]/60 text-sm outline-none focus:border-black/20 focus:bg-white transition-colors pr-11";
+const hintCls = "text-[#aeaeb2] text-[11px] px-1";
+const errCls = "text-red-500 text-xs px-1";
 const SPECIAL_RE = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
 
 const EyeIcon = ({ visible }) =>
@@ -19,22 +20,24 @@ const EyeIcon = ({ visible }) =>
     </svg>
   );
 
-const validate = (contraseña, confirmar) => {
-  const e = {};
-  if (!contraseña) e.contraseña = "La contraseña es requerida.";
-  else if (contraseña.length < 8) e.contraseña = "Mínimo 8 caracteres.";
-  else if (contraseña.length > 64) e.contraseña = "Máximo 64 caracteres.";
-  else if (!/[A-Z]/.test(contraseña)) e.contraseña = "Debe incluir al menos una mayúscula.";
-  else if (!/\d/.test(contraseña)) e.contraseña = "Debe incluir al menos un número.";
-  else if (!SPECIAL_RE.test(contraseña)) e.contraseña = "Debe incluir al menos un carácter especial.";
-  if (!confirmar) e.confirmar = "Confirmá tu contraseña.";
-  else if (confirmar !== contraseña) e.confirmar = "Las contraseñas no coinciden.";
-  return e;
+const validate = (contrasena, confirmar) => {
+  const errors = {};
+  if (!contrasena) errors.contrasena = "La contraseña es requerida.";
+  else if (contrasena.length < 8) errors.contrasena = "Mínimo 8 caracteres.";
+  else if (contrasena.length > 64) errors.contrasena = "Máximo 64 caracteres.";
+  else if (!/[A-Z]/.test(contrasena)) errors.contrasena = "Debe incluir al menos una mayúscula.";
+  else if (!/\d/.test(contrasena)) errors.contrasena = "Debe incluir al menos un número.";
+  else if (!SPECIAL_RE.test(contrasena)) errors.contrasena = "Debe incluir al menos un carácter especial.";
+
+  if (!confirmar) errors.confirmar = "Confirmá tu contraseña.";
+  else if (confirmar !== contrasena) errors.confirmar = "Las contraseñas no coinciden.";
+
+  return errors;
 };
 
 const ResetPasswordPage = () => {
   const [searchParams] = useSearchParams();
-  const [contraseña, setContraseña] = useState("");
+  const [contrasena, setContrasena] = useState("");
   const [confirmar, setConfirmar] = useState("");
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
@@ -45,15 +48,23 @@ const ResetPasswordPage = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const errs = validate(contraseña, confirmar);
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+    const nextErrors = validate(contrasena, confirmar);
+    if (Object.keys(nextErrors).length) {
+      setErrors(nextErrors);
+      return;
+    }
 
     const token = searchParams.get("token");
-    if (!token) { setServerError("Token no encontrado."); return; }
+    if (!token) {
+      setServerError("Token no encontrado.");
+      return;
+    }
 
     setLoading(true);
+    setServerError("");
+
     try {
-      await authService.resetPassword(token, contraseña);
+      await authService.resetPassword(token, contrasena);
       setSuccess(true);
     } catch (err) {
       setServerError(err.response?.data?.message || "El enlace es inválido o ya expiró.");
@@ -68,17 +79,17 @@ const ResetPasswordPage = () => {
         initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-sm bg-white/[0.07] backdrop-blur-xl border border-white/12 rounded-2xl p-8 shadow-2xl text-center"
+        className="w-full max-w-sm bg-white border border-black/[0.06] rounded-2xl p-8 shadow-sm text-center"
       >
-        <div className="w-14 h-14 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center mx-auto mb-5">
-          <svg className="w-7 h-7 text-white/70" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <div className="w-14 h-14 rounded-full bg-black/[0.04] border border-black/[0.06] flex items-center justify-center mx-auto mb-5">
+          <svg className="w-7 h-7 text-[#1d1d1f]/60" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h2 className="text-xl font-semibold text-white mb-2">Contraseña restablecida</h2>
-        <p className="text-white/40 text-sm mb-6">Ya podés iniciar sesión con tu nueva contraseña.</p>
+        <h2 className="text-xl font-semibold text-[#1d1d1f] mb-2">Contraseña restablecida</h2>
+        <p className="text-[#6e6e73] text-sm mb-6">Ya podés iniciar sesión con tu nueva contraseña.</p>
         <Link to="/login">
-          <button className="w-full bg-white text-black font-medium py-3 rounded-xl text-sm hover:bg-white/90 transition-colors">
+          <button className="w-full bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-[#2c2c2e] transition-colors">
             Iniciar sesión
           </button>
         </Link>
@@ -91,35 +102,57 @@ const ResetPasswordPage = () => {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-sm bg-white/[0.07] backdrop-blur-xl border border-white/12 rounded-2xl p-8 shadow-2xl"
+      className="w-full max-w-sm bg-white border border-black/[0.06] rounded-2xl p-8 shadow-sm"
     >
-      <h2 className="text-2xl font-semibold text-white mb-1">Nueva contraseña</h2>
-      <p className="text-white/40 text-sm mb-7">Elegí una contraseña segura para tu cuenta.</p>
+      <h2 className="text-2xl font-semibold text-[#1d1d1f] mb-1">Nueva contraseña</h2>
+      <p className="text-[#6e6e73] text-sm mb-7">Elegí una contraseña segura para tu cuenta.</p>
 
       <form onSubmit={submit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <div className="relative">
-            <input type={showPass ? "text" : "password"} placeholder="Nueva contraseña"
-              value={contraseña} onChange={(e) => { setContraseña(e.target.value); setErrors({}); setServerError(""); }}
-              className={inputCls} />
-            <button type="button" onClick={() => setShowPass(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors">
+            <input
+              type={showPass ? "text" : "password"}
+              placeholder="Nueva contraseña"
+              value={contrasena}
+              onChange={(e) => {
+                setContrasena(e.target.value);
+                setErrors((prev) => ({ ...prev, contrasena: "" }));
+                setServerError("");
+              }}
+              className={inputCls}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPass((v) => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors"
+            >
               <EyeIcon visible={showPass} />
             </button>
           </div>
-          {errors.contraseña
-            ? <span className={errCls}>{errors.contraseña}</span>
-            : <span className="text-white/20 text-[11px] px-1">Mínimo 8 caracteres, mayúscula, número y símbolo</span>
-          }
+          {errors.contrasena ? (
+            <span className={errCls}>{errors.contrasena}</span>
+          ) : (
+            <span className={hintCls}>Mínimo 8 caracteres, mayúscula, número y símbolo</span>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
           <div className="relative">
-            <input type={showConfirm ? "text" : "password"} placeholder="Confirmar contraseña"
-              value={confirmar} onChange={(e) => { setConfirmar(e.target.value); setErrors({}); }}
-              className={inputCls} />
-            <button type="button" onClick={() => setShowConfirm(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors">
+            <input
+              type={showConfirm ? "text" : "password"}
+              placeholder="Confirmar contraseña"
+              value={confirmar}
+              onChange={(e) => {
+                setConfirmar(e.target.value);
+                setErrors((prev) => ({ ...prev, confirmar: "" }));
+              }}
+              className={inputCls}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirm((v) => !v)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6e6e73]/60 hover:text-[#1d1d1f] transition-colors"
+            >
               <EyeIcon visible={showConfirm} />
             </button>
           </div>
@@ -127,13 +160,16 @@ const ResetPasswordPage = () => {
         </div>
 
         {serverError && (
-          <p className="text-red-400/80 text-xs bg-red-500/10 border border-red-500/15 rounded-lg px-3 py-2">
+          <p className="text-red-500 text-xs bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">
             {serverError}
           </p>
         )}
 
-        <button type="submit" disabled={loading}
-          className="mt-1 bg-white text-black font-medium py-3 rounded-xl text-sm hover:bg-white/90 transition-colors disabled:opacity-50">
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-1 bg-[#1d1d1f] text-white font-medium py-3 rounded-xl text-sm hover:bg-black transition-colors disabled:opacity-60"
+        >
           {loading ? "Guardando..." : "Restablecer contraseña"}
         </button>
       </form>

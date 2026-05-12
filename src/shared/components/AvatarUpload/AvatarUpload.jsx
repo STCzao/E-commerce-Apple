@@ -32,6 +32,7 @@ const AvatarUpload = ({ currentImg, initial = "?", onUploaded }) => {
       setPreview(data.secure_url);
       onUploaded(data.secure_url);
     } catch (err) {
+      console.error(err);
       setPreview(currentImg ?? null);
       onUploaded(null, err.message);
     } finally {

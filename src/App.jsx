@@ -12,6 +12,8 @@ import PageLoadingFallback from "./shared/components/PageLoadingFallback/PageLoa
 import Toast from "./shared/components/Toast/Toast.jsx";
 import ConfirmModal from "./shared/components/ConfirmModal/ConfirmModal.jsx";
 import ProtectedRoute from "./shared/components/ProtectedRoute/ProtectedRoute.jsx";
+import AdminRoute from "./shared/components/AdminRoute/AdminRoute.jsx";
+import AdminLayout from "./features/admin/components/AdminLayout/AdminLayout.jsx";
 import { authService } from "./features/auth/services/authService";
 import useAuthStore from "./store/authStore";
 
@@ -22,8 +24,13 @@ const ProductoDetallePage  = lazy(() => import("./pages/ProductoDetallePage.jsx"
 const LoginPage            = lazy(() => import("./pages/LoginPage.jsx"));
 const RegisterPage         = lazy(() => import("./pages/RegisterPage.jsx"));
 const ConfirmarEmailPage   = lazy(() => import("./pages/ConfirmarEmailPage.jsx"));
+const ForgotPasswordPage   = lazy(() => import("./pages/ForgotPasswordPage.jsx"));
 const ResetPasswordPage    = lazy(() => import("./pages/ResetPasswordPage.jsx"));
 const ProfilePage          = lazy(() => import("./pages/ProfilePage.jsx"));
+const AdminPage            = lazy(() => import("./pages/admin/AdminPage.jsx"));
+const NuevoProductoPage    = lazy(() => import("./pages/admin/NuevoProductoPage.jsx"));
+const EditarProductoPage   = lazy(() => import("./pages/admin/EditarProductoPage.jsx"));
+const CategoriasPage       = lazy(() => import("./pages/admin/CategoriasPage.jsx"));
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -41,7 +48,12 @@ const AnimatedRoutes = () => {
             <Route path="/login"         element={<PageWrapper><AuthLayout><LoginPage /></AuthLayout></PageWrapper>} />
             <Route path="/register"      element={<PageWrapper><AuthLayout><RegisterPage /></AuthLayout></PageWrapper>} />
             <Route path="/auth/confirmar"      element={<PageWrapper><AuthLayout><ConfirmarEmailPage /></AuthLayout></PageWrapper>} />
+            <Route path="/auth/forgot-password" element={<PageWrapper><AuthLayout><ForgotPasswordPage /></AuthLayout></PageWrapper>} />
             <Route path="/auth/reset-password" element={<PageWrapper><AuthLayout><ResetPasswordPage /></AuthLayout></PageWrapper>} />
+            <Route path="/admin" element={<AdminRoute><AdminLayout><AdminPage /></AdminLayout></AdminRoute>} />
+            <Route path="/admin/categorias" element={<AdminRoute><AdminLayout><CategoriasPage /></AdminLayout></AdminRoute>} />
+            <Route path="/admin/productos/nuevo" element={<AdminRoute><AdminLayout><NuevoProductoPage /></AdminLayout></AdminRoute>} />
+            <Route path="/admin/productos/:id/editar" element={<AdminRoute><AdminLayout><EditarProductoPage /></AdminLayout></AdminRoute>} />
           </Routes>
         </AnimatePresence>
       </Suspense>

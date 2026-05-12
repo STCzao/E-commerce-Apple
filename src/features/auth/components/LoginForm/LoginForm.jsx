@@ -115,6 +115,15 @@ const LoginForm = () => {
           {errors.contrasena && <span className={errCls}>{errors.contrasena}</span>}
         </div>
 
+        <div className="flex justify-end">
+          <Link
+            to="/auth/forgot-password"
+            className="text-xs text-[#6e6e73] hover:text-[#1d1d1f] transition-colors"
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </div>
+
         {serverError && <p className="text-red-500 text-xs bg-red-50 border border-red-100 rounded-xl px-3 py-2.5">{serverError}</p>}
 
         <button
